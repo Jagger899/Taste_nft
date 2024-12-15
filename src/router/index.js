@@ -1,0 +1,25 @@
+import { createRouter, createWebHashHistory } from 'vue-router'
+
+const router = createRouter({
+  history: createWebHashHistory('/Taste_NFT/'),
+  routes: [
+    {
+      path: '/',
+      name: 'main',
+      component: () => import('@/pages/Main.vue')
+    },
+
+    {
+      path: '/auction',
+      name: 'auction',
+      component: () => import('@/pages/Artwork.vue')
+    },
+    {
+      path: '/creator',
+      name: 'creator',
+      component: () => import('@/pages/Creator.vue')
+    }
+  ]
+})
+
+export default router

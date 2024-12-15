@@ -1,0 +1,24 @@
+@import 'base/fonts';
+@import 'base/reset';
+@import "base/base";
+
+
+@import 'base/fonts';
+@import 'base/reset';
+@import 'base/base';
+
+body{
+  font-family: Raleway;
+  background: #1d2228;
+}
+
+.container {
+  width: 100%;
+  max-width: 1366px;
+  margin: 0 auto;
+  padding: 0 25px;
+
+  @include media-breakpoint-down(md) {
+    padding: 0 16px;
+  }
+}
