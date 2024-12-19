@@ -1,3 +1,7 @@
+<script setup>
+import UIButton from '@/components/UI/UIButton.vue'
+</script>
+
 <template>
   <header class="header">
     <div class="header__logo">
@@ -21,9 +25,7 @@
   </header>
 </template>
 
-<script setup>
-import UIButton from '@/components/UI/UIButton.vue'
-</script>
+
 
 <style lang="scss" scoped>
 .header {

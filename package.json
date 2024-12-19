@@ -12,6 +12,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "pinia": "^2.3.0",
     "swiper": "^11.1.0",
     "vee-validate": "^4.12.6",
     "vue": "^3.4.21",

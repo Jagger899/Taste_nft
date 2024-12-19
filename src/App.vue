@@ -1,8 +1,18 @@
 <script setup>
-import TheHeader from '@/components/Base/TheHeader.vue'
-import TheSearch from '@/components/Base/TheSearch.vue'
-import SvgManager from '@/components/Base/SvgManager.vue'
-import PromoSLider from './components/pages/main/PromoSLider.vue';
+import TheHeader from '@/components/base/TheHeader.vue'
+import TheSearch from '@/components/base/TheSearch.vue'
+import SvgManager from '@/components/base/SvgManager.vue'
+import PromoSLider from './components/pages/main/PromoSlider.vue'
+import UIWalletModal from './components/UI/UIWalletModal.vue'
+import { useModalStore } from './data/store'
+
+
+const store = useModalStore()
+const cards = [
+  { description: 'Описание что нужно посмотреть' },
+  { description: 'Описание что нужно сделать' },
+  { description: 'Описание, как это сделать' }
+]
 </script>
 
 <template>
@@ -11,9 +21,11 @@ import PromoSLider from './components/pages/main/PromoSLider.vue';
 
     <TheSearch />
 
+    <UIWalletModal :visible="store.isModalVisible" :cards="cards" @update:visible="store.hideModal" />
+
     <SvgManager />
 
-    <PromoSLider/>
+    <PromoSLider />
   </div>
 </template>
 
