@@ -1,10 +1,10 @@
 <script setup>
-import { useModalStore } from '@/data/store';
-
+import { useModalStore } from '@/data/store'
 const store = useModalStore()
 const showModal = () => {
   store.showModal()
 }
+
 </script>
 
 <template>

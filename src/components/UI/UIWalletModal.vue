@@ -1,40 +1,35 @@
 <script setup>
-import UIButton from './UIButton.vue'
 import { defineProps, defineEmits } from 'vue'
-import SvgManager from '../base/SvgManager.vue'
-
-const props = defineProps({
-  visible: Boolean,
-  cards: {
-    type: Array,
-    default: () => []
-  }
-})
-
+import UIButton from '@/components/UI/UIButton.vue'
+import { useModalStore } from '@/data/store'
+const props = defineProps({ visible: Boolean, cards: { type: Array, default: () => [] } })
+const emit = defineEmits(['update:visible'])
+const store = useModalStore()
 const close = () => {
   emit('update:visible', false)
 }
-
-const emit = defineEmits(['update:visible'])
+const connectWallet = () => {
+  store.hideModal()
+  store.showCompleteModal()
+}
 </script>
 
 <template>
   <SvgManager />
   <div v-if="visible" class="wallet-modal">
     <div class="wallet-modal__content">
-      <span class="wallet-modal__close" @click="close">&times;</span>
-      <!-- <svg>
-        <use xlink:href="close-modal"></use>
-      </svg> -->
+      <div class="wallet-modal__close" @click="close"></div>
       <h2 class="wallet-modal__title">Connecting wallet</h2>
       <ul class="wallet-modal__cards">
         <li class="wallet-modal__card card" v-for="(item, index) in cards" :key="index">
-          <div class="wallet-modal__number">{{ index + 1 }}</div>
+          <div class="wallet-modal__number">{{ index + 1 }}.</div>
           <div class="card__video"></div>
           <h3 class="card__description">{{ item.description }}</h3>
         </li>
       </ul>
-      <div class="wallet-modal__button"><UIButton>Connect wallet</UIButton></div>
+      <div class="wallet-modal__button">
+        <UIButton @click="connectWallet">Connect wallet</UIButton>
+      </div>
     </div>
   </div>
 </template>
@@ -48,8 +43,9 @@ const emit = defineEmits(['update:visible'])
 .wallet-modal {
   position: fixed;
   display: block;
-  top: 65px;
-  left: 50%;
+  padding-top: 65px;
+  // top: 65px;
+  // left: 50%;
   // transform: translate(-50%, 50%);
   background: rgba(0, 0, 0, 0.6);
   top: 0;
@@ -58,16 +54,16 @@ const emit = defineEmits(['update:visible'])
   height: 100%;
   z-index: 10;
   overflow: auto;
-  
 
   &__content {
     box-shadow: 0 25px 40px 0 rgba(0, 0, 0, 0.05);
     padding: 45px 28px 32px 31px;
     background: #30363d;
     width: 653px;
-    height: 354px;
+    // height: 354px;
     margin: 0 auto;
     border-radius: 32px;
+    position: relative;
   }
 
   &__close {
@@ -75,6 +71,40 @@ const emit = defineEmits(['update:visible'])
     float: right;
     font-size: 28px;
     font-weight: bold;
+    position: absolute;
+    right: 45px;
+  }
+
+  &__close {
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    padding: 10px;
+    cursor: pointer;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 1px;
+      left: 8px;
+      width: 2px;
+      height: 20px;
+      border-radius: 2px;
+      background: $whiteColor;
+      transform: rotate(-45deg)
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 1px;
+      left: 8px;
+      width: 2px;
+      height: 20px;
+      border-radius: 2px;
+      background: $whiteColor;
+      transform: rotate(45deg)
+    }
   }
 
   &__title {
@@ -112,6 +142,7 @@ const emit = defineEmits(['update:visible'])
     top: -18px;
     left: -4px;
     font-size: 20px;
+    font-weight: 700;
     color: #1f2b38;
   }
 }
