@@ -1,14 +1,21 @@
 <script setup>
-import { useModalStore } from '@/data/store'
-const store = useModalStore()
-const showModal = () => {
-  store.showModal()
-}
+import { useModalStore } from '@/components/stores/store'
+const store = useModalStore();
+const props = defineProps({
+  modalName: String,
+});
+
+const handleClick = () => {
+  if (props.modalName) {
+    store.openModal(props.modalName);
+  }
+};
+
 
 </script>
 
 <template>
-  <button @click="showModal">
+  <button @click="handleClick">
     <slot></slot>
   </button>
 </template>

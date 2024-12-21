@@ -1,18 +1,15 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue'
-import { useModalStore } from '@/data/store'
-const props = defineProps({ visible: Boolean });
-const emit = defineEmits(['update:visible']);
+import { useModalStore } from '@/components/stores/store'
+
 const store = useModalStore();
 
 const close = () => {
-  emit('update:visible', false)
-  store.hideCompleteModal()
-}
+  store.closeModal('walletCompleteModal');
+};
 </script>
 
 <template>
-  <div v-if="visible" class="wallet-complete">
+  <div v-if="store.modals.walletCompleteModal" class="wallet-complete">
     <div class="wallet-modal__content">
       <div class="wallet-modal__close" @click="close"></div>
       <h2 class="wallet-modal__title">Connecting wallet</h2>
@@ -76,7 +73,7 @@ const close = () => {
 
 .wallet-modal__close {
   position: absolute;
-  right:24px;
+  right: 24px;
   height: 16px;
   width: 16px;
   padding: 10px;

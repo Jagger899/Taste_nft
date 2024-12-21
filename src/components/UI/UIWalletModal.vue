@@ -1,29 +1,38 @@
 <script setup>
 import { defineProps, defineEmits } from 'vue'
 import UIButton from '@/components/UI/UIButton.vue'
-import { useModalStore } from '@/data/store'
-const props = defineProps({ visible: Boolean, cards: { type: Array, default: () => [] } })
-const emit = defineEmits(['update:visible'])
+import { useModalStore } from '@/components/stores/store'
+const props = defineProps({
+  visible: Boolean,
+  cards: {
+    type: Array,
+    default: () => []
+  }
+})
+
 const store = useModalStore()
+
 const close = () => {
-  emit('update:visible', false)
+  store.closeModal('walletModal')
 }
+
 const connectWallet = () => {
-  store.hideModal()
-  store.showCompleteModal()
+  store.closeModal('walletModal')
+  store.openModal('walletCompleteModal')
 }
 </script>
 
 <template>
-  <SvgManager />
-  <div v-if="visible" class="wallet-modal">
+  <div v-if="store.modals.walletModal" class="wallet-modal">
     <div class="wallet-modal__content">
       <div class="wallet-modal__close" @click="close"></div>
       <h2 class="wallet-modal__title">Connecting wallet</h2>
       <ul class="wallet-modal__cards">
         <li class="wallet-modal__card card" v-for="(item, index) in cards" :key="index">
           <div class="wallet-modal__number">{{ index + 1 }}.</div>
-          <div class="card__video"></div>
+          <div class="card__video">
+            <img src="../../assets/images/video-play.svg" alt="play" class="card__video-play">
+          </div>
           <h3 class="card__description">{{ item.description }}</h3>
         </li>
       </ul>
@@ -91,7 +100,7 @@ const connectWallet = () => {
       height: 20px;
       border-radius: 2px;
       background: $whiteColor;
-      transform: rotate(-45deg)
+      transform: rotate(-45deg);
     }
 
     &::after {
@@ -103,7 +112,7 @@ const connectWallet = () => {
       height: 20px;
       border-radius: 2px;
       background: $whiteColor;
-      transform: rotate(45deg)
+      transform: rotate(45deg);
     }
   }
 
@@ -139,6 +148,7 @@ const connectWallet = () => {
     justify-content: center;
     align-items: center;
     position: absolute;
+    z-index: 4;
     top: -18px;
     left: -4px;
     font-size: 20px;
@@ -152,12 +162,21 @@ const connectWallet = () => {
   flex-direction: column;
   align-items: center;
   position: relative;
+
   &__video {
     border-radius: 16px;
     width: 160px;
     height: 90px;
     background: #c4c4c4;
     margin-bottom: 12px;
+    position: relative;
+  }
+
+  &__video-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
   }
 
   &__description {

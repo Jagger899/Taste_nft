@@ -1,5 +1,6 @@
 <script setup>
 import UIButton from '@/components/UI/UIButton.vue'
+
 </script>
 
 <template>
@@ -20,9 +21,11 @@ import UIButton from '@/components/UI/UIButton.vue'
     </div>
 
     <div class="header__btn">
-      <UIButton>Connect wallet</UIButton>
+      <UIButton modalName="walletModal">Connect wallet</UIButton>
     </div>
   </header>
+
+
 </template>
 
 

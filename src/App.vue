@@ -4,9 +4,8 @@ import TheSearch from '@/components/base/TheSearch.vue'
 import SvgManager from '@/components/base/SvgManager.vue'
 import PromoSLider from './components/pages/main/PromoSlider.vue'
 import UIWalletModal from './components/UI/UIWalletModal.vue'
-import { useModalStore } from './data/store'
+import { useModalStore } from './components/stores/store'
 import UIWalletModalComlete from './components/UI/UIWalletModalComlete.vue'
-
 
 const store = useModalStore()
 const cards = [
@@ -22,8 +21,20 @@ const cards = [
 
     <TheSearch />
 
-    <UIWalletModal :visible="store.isModalVisible" :cards="cards" @update:visible="store.hideModal" />
-    <UIWalletModalComlete :visible="store.isCompleteModalVisible" @update:visible="store.hideCompleteModal"/>
+    <!-- <UIWalletModal
+      :visible="store.isModalVisible"
+      :cards="cards"
+      @update:visible="store.hideModal"
+    /> -->
+    <!-- <UIWalletModalComlete
+      :visible="store.isCompleteModalVisible"
+      @update:visible="store.hideCompleteModal"
+    /> -->
+
+    <teleport to="body">
+      <UIWalletModal :cards="cards" />
+      <UIWalletModalComlete />
+    </teleport>
 
     <SvgManager />
 
