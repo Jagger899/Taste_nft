@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue'
+import { defineProps, defineEmits, reactive } from 'vue'
 import UIButton from '@/components/UI/UIButton.vue'
 import { useModalStore } from '@/components/stores/store'
 const props = defineProps({
@@ -9,8 +9,12 @@ const props = defineProps({
     default: () => []
   }
 })
-
-const store = useModalStore()
+const emit = defineEmits(['update:visible']);
+const store = useModalStore();
+const activeVideos = reactive({});
+const playVideo = (index) => {
+  activeVideos[index] = true;
+};
 
 const close = () => {
   store.closeModal('walletModal')
@@ -31,7 +35,21 @@ const connectWallet = () => {
         <li class="wallet-modal__card card" v-for="(item, index) in cards" :key="index">
           <div class="wallet-modal__number">{{ index + 1 }}.</div>
           <div class="card__video">
-            <img src="../../assets/images/video-play.svg" alt="play" class="card__video-play">
+            <img
+              v-if="!activeVideos[index]"
+              src="../../assets/images/video-play.svg"
+              alt="play"
+              class="card__video-play"
+              @click="playVideo(index)"
+            />
+            <iframe
+              v-if="activeVideos[index]"
+              :src="item.videoUrl"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              class="card__video-iframe"
+            ></iframe>
           </div>
           <h3 class="card__description">{{ item.description }}</h3>
         </li>
@@ -170,13 +188,14 @@ const connectWallet = () => {
     background: #c4c4c4;
     margin-bottom: 12px;
     position: relative;
+    overflow: hidden;
   }
 
   &__video-play {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
   }
 
   &__description {
@@ -186,5 +205,10 @@ const connectWallet = () => {
     color: $whiteColor;
     max-width: 177px;
   }
+  &__video-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
 }
 </style>

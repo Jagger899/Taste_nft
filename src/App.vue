@@ -9,10 +9,19 @@ import UIWalletModalComlete from './components/UI/UIWalletModalComlete.vue'
 
 const store = useModalStore()
 const cards = [
-  { description: 'Описание что нужно посмотреть' },
-  { description: 'Описание что нужно сделать' },
-  { description: 'Описание, как это сделать' }
-]
+  {
+    description: 'Описание что нужно посмотреть',
+    videoUrl: 'https://www.youtube.com/embed/mrNOYudaMAc?si=TBoNuP_t1F6dOxgu', 
+  },
+  {
+    description: 'Описание что нужно сделать',
+    videoUrl: 'https://www.youtube.com/embed/mrNOYudaMAc?si=TBoNuP_t1F6dOxgu',
+  },
+  {
+    description: 'Описание, как это сделать',
+    videoUrl: 'https://www.youtube.com/embed/3JZ_D3ELwOQ',
+  },
+];
 </script>
 
 <template>
