@@ -1,93 +1,122 @@
-<script setup></script>
-
 <template>
-  <section class="promo">
-    <div class="container">
-      <div class="promo__inner">
-        <div class="promo__info info">
-          <div class="info__user">
-            <picture>
-              <source srcset="../../../assets/images/users/user-0.webp" type="image/webp" />
-              <img
-                class="info__user-img"
-                src="../../../assets/images/users/user-0.jpg"
-                alt="logo"
-              />
-            </picture>
-
-            <div class="info__user-info">
-              <p class="info__user-name">User Name</p>
-              <p class="info__user-nick">@username</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="promo__slider">
-          <img class="promo__slider-img" src="../../../assets/images/nft/2/default.jpg" alt="" />
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="slider">
+    <swiper
+      :effect="'coverflow'"
+      class="main-swiper"
+      :grabCursor="true"
+      @slideChange="(event) => (idActive = event.activeIndex)"
+      :slidesPerView="1"
+      :coverflowEffect="{
+        rotate: -2,
+        stretch: '-70%',
+        depth: 200,
+        modifier: -1,
+        slideShadows: false
+      }"
+      :pagination="true"
+      :modules="[EffectCoverflow, Pagination, Navigation]"
+    >
+      <swiper-slide class="slider__swiper-slide" v-for="(nft, id) in sliderNft" :key="id">
+        <BasePicture
+          :srcset="nft.photo.webp"
+          :width="nft.photo.width"
+          :height="nft.photo.height"
+          :src="nft.photo.src"
+          alt="logo"
+        />
+      </swiper-slide>
+    </swiper>
+  </div>
 </template>
 
-<style lang="scss" scoped>
+<script setup>
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { EffectCoverflow, Pagination, Navigation } from 'swiper/modules'
+import { nft } from '@/data/nft.js'
+import { ref, watch } from 'vue'
+import 'swiper/css'
+import 'swiper/css/effect-coverflow'
+import 'swiper/css/pagination'
+import BasePicture from '@/components/base/BasePicture.vue'
+const emit = defineEmits(['activeSlide'])
+
+const sliderNft = nft.filter((nft, id) => id < 6)
+const idActive = ref(0)
+
+watch(idActive, () => {
+  emit('activeSlide', sliderNft[idActive.value])
+})
+
+emit('activeSlide', sliderNft[idActive.value])
+</script>
+
+<style lang="scss">
 @import '@/assets/scss/base/base';
-@import '@/assets/scss/base/reset';
-@import '@/assets/scss/style';
-@import '@/assets/scss/base/colors';
 
-.promo {
-  margin-top: 96px;
+.slider {
+  max-width: 785px;
 
-  &__inner {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
+  @include media-breakpoint-down(lg) {
+    max-width: 57.5vw;
   }
 
-  &__info {
-    display: flex;
-    gap: 12px;
+  @include media-breakpoint-down(md) {
+    max-width: 580px;
+    margin: 0 auto;
   }
 
-  .info {
-    &__user {
-      display: flex;
-      gap: 12px;
-    }
+  &__swiper-slide {
+    img {
+      width: 519px;
+      height: 519px;
+      aspect-ratio: 1/1;
+      object-fit: cover;
 
-    &__user-img {
-      border-radius: 12px;
-      width: 49px;
-      height: 49px;
-      box-shadow: 0 0 15px 0 rgba(255, 255, 255, 0.15);
-    }
-
-    &__user-info {
-      display: flex;
-      flex-direction: column;
-    }
-
-    &__user-name {
-      font-weight: 700;
-      font-size: 18px;
-      color: $whiteColor;
-    }
-
-    &__user-nick {
-      font-weight: 500;
-      font-size: 14px;
-      background: linear-gradient(270deg, #8743ff 0%, #d8c2ff 100%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      @include media-breakpoint-down(sm) {
+        width: 100%;
+        height: unset;
+        aspect-ratio: 1/1;
+      }
     }
   }
+}
 
-  &__slider-img {
-    width: 519px;
-    height: 519px;
-    object-fit: cover;
+.swiper {
+  width: 100%;
+  padding-bottom: 45px;
+
+  @include media-breakpoint-down(xs) {
+    padding-bottom: 40px;
   }
+}
+
+.swiper-slide-active {
+  @include media-breakpoint-down(sm) {
+    transform: scale(1.005) !important;
+  }
+}
+
+.swiper-pagination {
+  max-width: 640px !important;
+
+  @include media-breakpoint-down(sm) {
+    max-width: unset !important;
+  }
+}
+
+.swiper-pagination-bullet {
+  width: 95px;
+  height: 5px;
+  border-radius: 5px;
+  margin: 0 10px 0 0 !important;
+  background-color: rgba(255, 255, 255, 0.15);
+
+  @include media-breakpoint-down(sm) {
+    width: 10%;
+  }
+}
+
+.swiper-pagination-bullet-active {
+  background-color: rgba(255, 255, 255, 0.5);
 }
 </style>

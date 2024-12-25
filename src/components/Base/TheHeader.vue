@@ -42,6 +42,7 @@ import UIButton from '@/components/UI/UIButton.vue'
   align-items: center;
   padding: 0 24px;
   border-radius: 0px 0px 32px 32px;
+  z-index: 10;
 
   &__logo {
     margin-left: 5px;
