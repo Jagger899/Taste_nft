@@ -3,11 +3,12 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import CoverflowSlider from './PromoSLider.vue'
 import { users } from '@/data/users.js'
 import { ref } from 'vue'
+import UIButton from '@/components/UI/UIButton.vue'
 
 const currentUser = ref(users[0])
 console.log(currentUser.value)
 
-const updateUser = function(nft){
+const updateUser = function (nft) {
   const userId = nft.user
   currentUser.value = users.find((user) => user.id === userId)
 }
@@ -36,6 +37,31 @@ const updateUser = function(nft){
           <p class="info__description">
             {{ currentUser.description }}
           </p>
+          <div class="info__results">
+            <div class="info__sold">
+              <p class="info__sold-text">Sold for:</p>
+              <div class="info__sold-number">
+                <svg class="info__sold-number-svg">
+                  <use xlink:href="#tongue"></use>
+                </svg>
+                <p class="info__sold-number-value">{{ currentUser.sales.quantity }}M</p>
+              </div>
+            </div>
+            <div class="info__socials">
+              <div class="info__button">
+                <UIButton>View</UIButton>
+              </div>
+              <svg class="info__socials-svg">
+                  <use xlink:href="#external"></use>
+                </svg>
+                <svg class="info__socials-svg">
+                  <use xlink:href="#share"></use>
+                </svg>
+                <svg class="info__socials-svg">
+                  <use xlink:href="#vertical-more"></use>
+                </svg>
+            </div>
+          </div>
         </div>
         <div class="promo__slider">
           <CoverflowSlider @activeSlide="updateUser" />
@@ -126,6 +152,55 @@ const updateUser = function(nft){
       overflow: hidden;
       text-overflow: ellipsis;
       max-height: 72px;
+      margin-bottom: 16px;
+    }
+
+    &__button {
+      width: 97px;
+      height: 40px;
+    }
+
+    &__results {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &__sold {
+      display: flex;
+      gap: 12px;
+    }
+
+    &__sold-number {
+      display: flex;
+      gap: 5px;
+    }
+
+    &__sold-number-value {
+      font-weight: 600;
+      font-size: 16px;
+      color: $whiteColor;
+    }
+
+    &__sold-text {
+      font-weight: 600;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    &__socials-svg {
+      width: 40px;
+      height: 40px;
+    }
+
+    &__sold-number-svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    &__socials {
+      display: flex;
+      gap: 12px;
     }
   }
 
