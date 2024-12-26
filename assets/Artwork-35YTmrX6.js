@@ -1,0 +1,1 @@
+import{_ as r,c as o,a as t,o as n}from"./index-BC-UA0mi.js";const s={};function a(c,e){return n(),o("div",null,e[0]||(e[0]=[t("h1",null,"Artwork",-1)]))}const _=r(s,[["render",a]]);export{_ as default};
