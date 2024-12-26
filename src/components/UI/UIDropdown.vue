@@ -6,7 +6,7 @@
     class="dropdown"
   >
     <div class="dropdown__button">
-      <span>{{ selected || list[0] }}</span>
+      <span>{{ selected ? selected : list[0] }}</span>
 
       <svg class="dropdown__svg">
         <use xlink:href="#dropdown-arrow"></use>
@@ -21,19 +21,18 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-defineProps(['list'])
-const emit = defineEmits(['submit'])
+import { ref, onMounted } from 'vue';
+defineProps(['list', 'id']);
+const emit = defineEmits(['submit']);
 
-let dropActive = ref(false)
-const selected = ref('')
-const currentDrop = ref(null)
-
+let dropActive = ref(false);
+const selected = ref('');
+const currentDrop = ref(null);
 
 function select(item) {
-  selected.value = item;
-  dropActive.value = false;
-  emit('submit', item);
+  selected.value = item
+
+  emit('submit', item)
 }
 
 onMounted(() => window.addEventListener('click', checkClick))
@@ -62,7 +61,7 @@ function checkClick(event) {
   user-select: none;
 
   @include media-breakpoint-down(xs) {
-    width: 140px;
+    width: 130px;
     font-size: 12px;
   }
 
@@ -100,7 +99,7 @@ function checkClick(event) {
       color: $whiteColor;
     }
 
-    svg {
+    .dropdown__svg {
       margin-left: 6px;
       width: 8px;
       height: 5px;

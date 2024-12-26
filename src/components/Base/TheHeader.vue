@@ -1,5 +1,14 @@
 <script setup>
-import UIButton from '@/components/UI/UIButton.vue'
+import UIButton from '@/components/UI/UIButton.vue';
+import { ref } from 'vue'
+
+const searchQuery = ref('');
+const emit = defineEmits(['update:searchQuery']);
+
+function updateSearchQuery(event) {
+  searchQuery.value = event.target.value
+  emit('update:searchQuery', searchQuery.value)
+}
 
 </script>
 
@@ -17,7 +26,12 @@ import UIButton from '@/components/UI/UIButton.vue'
         <use xlink:href="#search"></use>
       </svg>
 
-      <input class="header__input" type="text" placeholder="Search for ..." />
+      <input
+        class="header__input"
+        type="text"
+        placeholder="Search for ..."
+        @input="updateSearchQuery"
+       />
     </div>
 
     <div class="header__btn">

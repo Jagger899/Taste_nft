@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue'
 import TheHeader from '@/components/base/TheHeader.vue'
 import TheSearch from '@/components/base/TheSearch.vue'
 import SvgManager from '@/components/base/SvgManager.vue'
@@ -23,11 +24,14 @@ const cards = [
     videoUrl: 'https://www.youtube.com/embed/3JZ_D3ELwOQ',
   },
 ];
+
+const searchQuery = ref('');
+
 </script>
 
 <template>
   <div class="app">
-    <TheHeader />
+    <TheHeader v-model:searchQuery="searchQuery" />
 
     <TheSearch />
 
@@ -50,7 +54,7 @@ const cards = [
 
     <PromoSLider />
 
-    <CardsNft/>
+    <CardsNft :searchQuery="searchQuery"/>
   </div>
 </template>
 
