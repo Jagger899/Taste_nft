@@ -1,1 +1,0 @@
-import{_ as n,c as a,a as o,o as r}from"./index-BC-UA0mi.js";const t={};function s(c,e){return r(),a("div",null,e[0]||(e[0]=[o("h1",null,"Main",-1)]))}const _=n(t,[["render",s]]);export{_ as default};
