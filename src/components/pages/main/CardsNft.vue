@@ -2,19 +2,19 @@
 import UIDropdown from '@/components/UI/UIDropdown.vue'
 import { nft } from '@/data/nft'
 import BasePicture from '@/components/base/BasePicture.vue'
-import { ref, computed, onMounted,defineProps } from 'vue'
+import { ref, computed, onMounted, defineProps } from 'vue'
 import { users } from '@/data/users'
 
-const sort = ref('Recently added');
-const filter = ref('All');
-const windowWidth = ref(window.innerWidth);
+const sort = ref('Recently added')
+const filter = ref('All')
+const windowWidth = ref(window.innerWidth)
 
 const props = defineProps({
   searchQuery: {
     type: String,
-    default: '',
-  },
-});
+    default: ''
+  }
+})
 
 function updateWindowWidth() {
   windowWidth.value = window.innerWidth
@@ -22,28 +22,35 @@ function updateWindowWidth() {
 
 const filteredAndSortedNft = computed(() => {
   let sortedNft = [...nft]
-
-  if (sort.value === 'Recently added') {
-    sortedNft.sort((a, b) => b.sortInfo.recentlyAdded - a.sortInfo.recentlyAdded)
-  } else if (sort.value === 'Popular') {
-    sortedNft.sort((a, b) => b.sortInfo.popular - a.sortInfo.popular)
-  } else if (sort.value === 'The best') {
-    sortedNft.sort((a, b) => b.sortInfo.best - a.sortInfo.best)
+  switch (sort.value) {
+    case 'Recently added':
+      sortedNft.sort((a, b) => b.sortInfo.recentlyAdded - a.sortInfo.recentlyAdded)
+      break
+    case 'Popular':
+      sortedNft.sort((a, b) => b.sortInfo.popular - a.sortInfo.popular)
+      break
+    case 'The best':
+      sortedNft.sort((a, b) => b.sortInfo.best - a.sortInfo.best)
+      break
+    default:
+      break
   }
   console.log(filter.value)
-
-  if (filter.value === 'Auctions') {
-    sortedNft = sortedNft.filter((item) => item.type === 'auction')
-  } else if (filter.value === 'Default') {
-    sortedNft = sortedNft.filter((item) => item.type === 'default')
+  switch (filter.value) {
+    case 'Auctions':
+      sortedNft = sortedNft.filter((item) => item.type === 'auction')
+      break
+    case 'Default':
+      sortedNft = sortedNft.filter((item) => item.type === 'default')
+      break
+    default:
+      break
   }
-
-    if (props.searchQuery) {
+  if (props.searchQuery) {
     sortedNft = sortedNft.filter((item) =>
       item.description.title.toLowerCase().includes(props.searchQuery.toLowerCase())
     )
   }
-
   let limit = 12
   if (windowWidth.value < 1024 && windowWidth.value > 768) {
     limit = 8
