@@ -25,7 +25,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 1,
       popular: 1,
-      best: 1
+      best: 1,
+      activity: 5
     }
   },
   {
@@ -54,7 +55,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 3,
       popular: 0,
-      best: 10
+      best: 10,
+      activity: 25
     }
   },
   {
@@ -82,7 +84,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 2,
       popular: 10,
-      best: 0
+      best: 0,
+      activity: 47
     }
   },
   {
@@ -112,7 +115,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 5,
       popular: 6,
-      best: 2
+      best: 2,
+      activity: 17
     }
   },
   {
@@ -140,7 +144,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 2,
       popular: 3,
-      best: 5
+      best: 5,
+      activity: 4
     }
   },
   {
@@ -170,7 +175,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 8,
       popular: 8,
-      best: 2
+      best: 2,
+      activity: 11
     }
   },
   {
@@ -198,7 +204,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 3,
       popular: 7,
-      best: 0
+      best: 0,
+      activity: 14
     }
   },
   {
@@ -227,7 +234,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 4,
       popular: 7,
-      best: 9
+      best: 9,
+      activity: 10
     }
   },
   {
@@ -255,7 +263,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 6,
       popular: 2,
-      best: 5
+      best: 5,
+      activity: 10
     }
   },
   {
@@ -284,7 +293,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 2,
       popular: 6,
-      best: 8
+      best: 8,
+      activity: 102
     }
   },
   {
@@ -312,7 +322,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 2,
       popular: 4,
-      best: 3
+      best: 3,
+      activity: 10
     }
   },
   {
@@ -341,7 +352,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 1,
       popular: 3,
-      best: 3
+      best: 3,
+      activity: 10
     }
   },
   {
@@ -369,7 +381,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 7,
       popular: 3,
-      best: 5
+      best: 5,
+      activity: 10
     }
   },
   {
@@ -399,7 +412,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 3,
       popular: 6,
-      best: 7
+      best: 7,
+      activity: 10
     }
   },
   {
@@ -427,7 +441,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 5,
       popular: 1,
-      best: 8
+      best: 8,
+      activity: 19
     }
   },
   {
@@ -456,7 +471,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 3,
       popular: 7,
-      best: 1
+      best: 1,
+      activity: 10
     }
   },
   {
@@ -484,7 +500,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 2,
       popular: 4,
-      best: 7
+      best: 7,
+      activity: 10
     }
   },
   {
@@ -513,7 +530,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 4,
       popular: 6,
-      best: 2
+      best: 2,
+      activity: 10
     }
   },
   {
@@ -541,7 +559,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 8,
       popular: 0,
-      best: 3
+      best: 3,
+      activity: 10
     }
   },
   {
@@ -570,7 +589,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 3,
       popular: 5,
-      best: 1
+      best: 1,
+      activity: 10
     }
   },
   {
@@ -598,7 +618,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 3,
       popular: 2,
-      best: 7
+      best: 7,
+      activity: 10
     }
   },
   {
@@ -627,7 +648,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 5,
       popular: 8,
-      best: 2
+      best: 2,
+      activity: 10
     }
   },
   {
@@ -657,7 +679,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 6,
       popular: 9,
-      best: 4
+      best: 4,
+      activity: 15
     }
   },
   {
@@ -686,7 +709,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 3,
       popular: 7,
-      best: 5
+      best: 5,
+      activity: 1
     }
   },
   {
@@ -715,7 +739,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 5,
       popular: 8,
-      best: 2
+      best: 2,
+      activity: 18
     }
   },
   {
@@ -743,7 +768,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 7,
       popular: 6,
-      best: 9
+      best: 9,
+      activity: 18
     }
   },
   {
@@ -772,7 +798,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 9,
       popular: 3,
-      best: 7
+      best: 7,
+      activity: 26
     }
   },
   {
@@ -800,7 +827,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 2,
       popular: 5,
-      best: 6
+      best: 6,
+      activity: 7
     }
   },
   {
@@ -830,7 +858,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 8,
       popular: 4,
-      best: 3
+      best: 3,
+      activity: 4
     }
   },
   {
@@ -859,7 +888,8 @@ export const nft = [
     sortInfo: {
       recentlyAdded: 3,
       popular: 2,
-      best: 7
+      best: 7,
+      activity: 24
     }
   }
 ]

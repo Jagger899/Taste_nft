@@ -6,6 +6,7 @@ import PromoSLider from './components/pages/main/Promo.vue'
 import UIWalletModal from './components/UI/UIWalletModal.vue'
 import { useModalStore } from './components/stores/store'
 import UIWalletModalComlete from './components/UI/UIWalletModalComlete.vue'
+import CardsNft from './components/pages/main/CardsNft.vue'
 
 const store = useModalStore()
 const cards = [
@@ -48,6 +49,8 @@ const cards = [
     <SvgManager />
 
     <PromoSLider />
+
+    <CardsNft/>
   </div>
 </template>
 

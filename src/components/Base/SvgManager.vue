@@ -164,13 +164,19 @@
         fill="white"
       />
     </symbol>
+
+    <symbol id="dropdown-arrow" viewBox="0 0 8 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 4L0.535899 0.25L7.4641 0.25L4 4Z" fill="white"/>
+    </symbol>
   </svg>
+
 </template>
 
 <svg>
 
 </svg>
 
-<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="8" height="4" >
 
 </svg>
+

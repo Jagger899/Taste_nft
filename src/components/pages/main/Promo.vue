@@ -79,6 +79,7 @@ const updateUser = function (nft) {
 
 .promo {
   margin-top: 96px;
+  margin-bottom: 80px;
 
   &__inner {
     display: flex;
