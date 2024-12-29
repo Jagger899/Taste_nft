@@ -2,8 +2,9 @@
 import UIDropdown from '@/components/UI/UIDropdown.vue'
 import { nft } from '@/data/nft'
 import BasePicture from '@/components/base/BasePicture.vue'
-import { ref, computed, onMounted, defineProps } from 'vue'
+import { ref, computed, onMounted, onUnmounted, defineProps } from 'vue'
 import { users } from '@/data/users'
+import CountDown from './CountDown.vue'
 
 const sort = ref('Recently added')
 const filter = ref('All')
@@ -120,9 +121,12 @@ function getUserById(userId) {
             </div>
             <div class="card__info-sold">
               <p class="card__info-text">Ending in:</p>
-              <p class="card__info-advant-number" v-if="nftInfo.price.time">
-                {{ nftInfo.price.time }}h
-              </p>
+              <CountDown
+                class="card__info-advant-number"
+                v-if="nftInfo.price.time"
+                :initial-time="nftInfo.price.time * 3600"
+              />
+              <p class="card__info-advant-number" v-else>Sold</p>
             </div>
           </div>
         </div>
