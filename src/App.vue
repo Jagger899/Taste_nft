@@ -8,6 +8,7 @@ import UIWalletModal from './components/UI/UIWalletModal.vue'
 import { useModalStore } from './components/stores/store'
 import UIWalletModalComlete from './components/UI/UIWalletModalComlete.vue'
 import CardsNft from './components/pages/main/CardsNft.vue'
+import UIVideoModal from './components/UI/UIVideoModal.vue'
 
 const store = useModalStore()
 const cards = [
@@ -48,6 +49,7 @@ const searchQuery = ref('');
     <teleport to="body">
       <UIWalletModal :cards="cards" />
       <UIWalletModalComlete />
+      <UIVideoModal />
     </teleport>
 
     <SvgManager />

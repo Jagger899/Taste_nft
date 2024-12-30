@@ -1,29 +1,30 @@
 <script setup>
-import { defineProps, defineEmits, reactive } from 'vue'
-import UIButton from '@/components/UI/UIButton.vue'
-import { useModalStore } from '@/components/stores/store'
+import { defineProps } from 'vue';
+import UIButton from '@/components/UI/UIButton.vue';
+import { useModalStore } from '@/components/stores/store';
+
 const props = defineProps({
-  visible: Boolean,
   cards: {
     type: Array,
     default: () => []
-  }
-})
-const emit = defineEmits(['update:visible']);
+  },
+});
+
 const store = useModalStore();
-const activeVideos = reactive({});
+
 const playVideo = (index) => {
-  activeVideos[index] = true;
+  const videoUrl = props.cards[index].videoUrl;
+  store.openModal('videoModal', videoUrl);
 };
 
 const close = () => {
-  store.closeModal('walletModal')
-}
+  store.closeModal('walletModal');
+};
 
 const connectWallet = () => {
-  store.closeModal('walletModal')
-  store.openModal('walletCompleteModal')
-}
+  store.closeModal('walletModal');
+  store.openModal('walletCompleteModal');
+};
 </script>
 
 <template>
@@ -36,20 +37,11 @@ const connectWallet = () => {
           <div class="wallet-modal__number">{{ index + 1 }}.</div>
           <div class="card__video">
             <img
-              v-if="!activeVideos[index]"
               src="../../assets/images/video-play.svg"
               alt="play"
               class="card__video-play"
               @click="playVideo(index)"
             />
-            <iframe
-              v-if="activeVideos[index]"
-              :src="item.videoUrl"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              class="card__video-iframe"
-            ></iframe>
           </div>
           <h3 class="card__description">{{ item.description }}</h3>
         </li>
