@@ -80,6 +80,7 @@ const updateUser = function (nft) {
 .promo {
   margin-top: 96px;
   margin-bottom: 80px;
+  overflow: hidden;
 
   &__inner {
     display: flex;
@@ -88,6 +89,7 @@ const updateUser = function (nft) {
     gap: 16px;
     @include media-breakpoint-down(md) {
       flex-direction: column;
+      align-items: center;
     }
   }
 
@@ -209,6 +211,11 @@ const updateUser = function (nft) {
     width: 519px;
     height: 519px;
     object-fit: cover;
+
+    @include media-breakpoint-down(md) {
+      width: 400px;
+      height: 400px;
+    }
   }
 }
 </style>

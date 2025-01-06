@@ -40,7 +40,7 @@ import 'swiper/css/pagination'
 import BasePicture from '@/components/base/BasePicture.vue'
 const emit = defineEmits(['activeSlide'])
 
-const sliderNft = nft.filter((nft, id) => id < 6)
+const sliderNft = nft.filter((nft, id) => id < 5)
 const idActive = ref(0)
 
 watch(idActive, () => {
@@ -57,12 +57,21 @@ emit('activeSlide', sliderNft[idActive.value])
   max-width: 785px;
 
   @include media-breakpoint-down(lg) {
-    max-width: 57.5vw;
+    max-width: 600px;
+    margin: 0 auto;
   }
 
   @include media-breakpoint-down(md) {
     max-width: 580px;
     margin: 0 auto;
+  }
+
+  @include media-breakpoint-down(sm) {
+    max-width: 360px;
+  }
+
+  @include media-breakpoint-down(xs) {
+    max-width: 300px;
   }
 
   &__swiper-slide {
@@ -71,6 +80,11 @@ emit('activeSlide', sliderNft[idActive.value])
       height: 519px;
       aspect-ratio: 1/1;
       object-fit: cover;
+
+      @include media-breakpoint-down(md) {
+        width: 400px;
+        height: 400px;
+      }
 
       @include media-breakpoint-down(sm) {
         width: 100%;
@@ -85,6 +99,7 @@ emit('activeSlide', sliderNft[idActive.value])
   width: 100%;
   padding-bottom: 45px;
 
+
   @include media-breakpoint-down(xs) {
     padding-bottom: 40px;
   }
@@ -92,7 +107,6 @@ emit('activeSlide', sliderNft[idActive.value])
 
 .swiper-slide-active {
   @include media-breakpoint-down(sm) {
-    transform: scale(1.005) !important;
   }
 }
 

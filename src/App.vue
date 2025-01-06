@@ -9,6 +9,7 @@ import { useModalStore } from './components/stores/store'
 import UIWalletModalComlete from './components/UI/UIWalletModalComlete.vue'
 import CardsNft from './components/pages/main/CardsNft.vue'
 import UIVideoModal from './components/UI/UIVideoModal.vue'
+import UsersSlider from './components/pages/main/UsersSlider.vue'
 
 const store = useModalStore()
 const cards = [
@@ -57,6 +58,8 @@ const searchQuery = ref('');
     <PromoSLider />
 
     <CardsNft :searchQuery="searchQuery"/>
+    
+    <UsersSlider/>
   </div>
 </template>
 

@@ -69,6 +69,7 @@ function getUserById(userId) {
   return users.find((user) => user.id === userId) || {}
 }
 </script>
+
 <template>
   <section class="nft-cards">
     <div class="container">
@@ -107,7 +108,7 @@ function getUserById(userId) {
             :lazy="true"
             :alt="nftInfo.photo.alt"
           />
-          <!-- <img src="../../../assets/images/nft/0/default.jpg" alt="" class="card__img" /> -->
+
           <div class="card__info">
             <h2 class="card__title">{{ nftInfo.description.title }}</h2>
             <div class="card__info-sold card__info-sold_first">
