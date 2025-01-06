@@ -1,0 +1,1 @@
+import{_ as r,c as o,a as t,o as a}from"./index-adEIW9QU.js";const n={};function s(c,e){return a(),o("div",null,e[0]||(e[0]=[t("h1",null,"Creator",-1)]))}const _=r(n,[["render",s]]);export{_ as default};
