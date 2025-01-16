@@ -4,6 +4,8 @@ import CoverflowSlider from './PromoSLider.vue'
 import { users } from '@/data/users.js'
 import { ref } from 'vue'
 import UIButton from '@/components/UI/UIButton.vue'
+import { useRouter } from 'vue-router'
+import { toast } from 'vue3-toastify'
 
 const currentUser = ref(users[0])
 console.log(currentUser.value)
@@ -11,6 +13,25 @@ console.log(currentUser.value)
 const updateUser = function (nft) {
   const userId = nft.user
   currentUser.value = users.find((user) => user.id === userId)
+}
+
+const router = useRouter()
+
+const navigateToArtwork = () => {
+  const artworkLink = `${window.location.origin}/#/auction`
+  window.open(artworkLink, '_blank')
+}
+
+const copyArtworkLink = () => {
+  const artworkLink = `${window.location.origin}/#/artwork`
+  navigator.clipboard
+    .writeText(artworkLink)
+    .then(() => {
+      toast.success('Ссылка скопирована!')
+    })
+    .catch(() => {
+      toast.error('Не удалось скопировать ссылку.')
+    })
 }
 </script>
 
@@ -51,15 +72,15 @@ const updateUser = function (nft) {
               <div class="info__button">
                 <UIButton>View</UIButton>
               </div>
+              <svg class="info__socials-svg" @click="navigateToArtwork">
+                <use xlink:href="#external"></use>
+              </svg>
+              <svg class="info__socials-svg" @click="copyArtworkLink">
+                <use xlink:href="#share"></use>
+              </svg>
               <svg class="info__socials-svg">
-                  <use xlink:href="#external"></use>
-                </svg>
-                <svg class="info__socials-svg">
-                  <use xlink:href="#share"></use>
-                </svg>
-                <svg class="info__socials-svg">
-                  <use xlink:href="#vertical-more"></use>
-                </svg>
+                <use xlink:href="#vertical-more"></use>
+              </svg>
             </div>
           </div>
         </div>

@@ -9,6 +9,8 @@
 body {
   font-family: Raleway;
   background: #1d2228;
+  max-height: 100vh;
+  // overflow-y: hidden;
   overflow-x: hidden;
 }
 

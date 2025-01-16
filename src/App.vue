@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import TheHeader from '@/components/base/TheHeader.vue'
-import TheSearch from '@/components/base/TheSearch.vue'
+import TheSearch from './components/base/TheSearch.vue'
 import SvgManager from '@/components/base/SvgManager.vue'
 import PromoSLider from './components/pages/main/Promo.vue'
 import UIWalletModal from './components/UI/UIWalletModal.vue'
@@ -35,18 +35,7 @@ const searchQuery = ref('');
   <div class="app">
     <TheHeader v-model:searchQuery="searchQuery" />
 
-    <TheSearch />
-
-    <!-- <UIWalletModal
-      :visible="store.isModalVisible"
-      :cards="cards"
-      @update:visible="store.hideModal"
-    /> -->
-    <!-- <UIWalletModalComlete
-      :visible="store.isCompleteModalVisible"
-      @update:visible="store.hideCompleteModal"
-    /> -->
-
+    <TheSearch :searchQuery="searchQuery" />
     <teleport to="body">
       <UIWalletModal :cards="cards" />
       <UIWalletModalComlete />
@@ -55,12 +44,16 @@ const searchQuery = ref('');
 
     <SvgManager />
 
+    <router-view />
+<!--
     <PromoSLider />
 
-    <CardsNft :searchQuery="searchQuery"/>
-    
-    <UsersSlider/>
+    <CardsNft/>
+
+    <UsersSlider/> -->
   </div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+
+</style>

@@ -1,12 +1,12 @@
-
 import { defineStore } from 'pinia'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 
 export const useModalStore = defineStore('modal', () => {
   const modals = reactive({
     walletModal: false,
     walletCompleteModal: false,
-    videoModal: false
+    videoModal: false,
+    searchModal: false
   })
 
   const activeVideoUrl = reactive({
@@ -31,6 +31,6 @@ export const useModalStore = defineStore('modal', () => {
     modals,
     activeVideoUrl,
     openModal,
-    closeModal
+    closeModal,
   }
 })

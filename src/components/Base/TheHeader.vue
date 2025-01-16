@@ -1,15 +1,26 @@
 <script setup>
-import UIButton from '@/components/UI/UIButton.vue';
-import { ref } from 'vue'
+import UIButton from '@/components/UI/UIButton.vue'
+import { ref, watch } from 'vue'
+import { useModalStore } from '../stores/store'
 
 const searchQuery = ref('');
 const emit = defineEmits(['update:searchQuery']);
+const store = useModalStore();
 
 function updateSearchQuery(event) {
-  searchQuery.value = event.target.value
-  emit('update:searchQuery', searchQuery.value)
+  searchQuery.value = event.target.value;
+  emit('update:searchQuery', searchQuery.value);
+
+  if (searchQuery.value.trim() !== '') {
+    store.openModal('searchModal');
+  }
 }
 
+function clearSearchQuery() {
+  searchQuery.value = ''
+  emit('update:searchQuery', searchQuery.value);
+  store.closeModal('searchModal');
+}
 </script>
 
 <template>
@@ -22,7 +33,7 @@ function updateSearchQuery(event) {
     </div>
 
     <div class="header__search">
-      <svg>
+      <svg class="header__search-svg">
         <use xlink:href="#search"></use>
       </svg>
 
@@ -30,19 +41,23 @@ function updateSearchQuery(event) {
         class="header__input"
         type="text"
         placeholder="Search for ..."
+        v-model="searchQuery"
         @input="updateSearchQuery"
-       />
+      />
+
+      <div v-if="searchQuery" class="header__clear-input" @click="clearSearchQuery">
+        <svg class="header__clear-input-svg">
+          <use xlink:href="#clear-input"></use>
+        </svg>
+        <p class="header__clear-input-text">Clear</p>
+      </div>
     </div>
 
     <div class="header__btn">
       <UIButton modalName="walletModal">Connect wallet</UIButton>
     </div>
   </header>
-
-
 </template>
-
-
 
 <style lang="scss" scoped>
 .header {
@@ -72,15 +87,15 @@ function updateSearchQuery(event) {
     flex-grow: 1;
     max-width: 100%;
     margin: 0 16px 0 28px;
+  }
 
-    svg {
-      position: absolute;
-      left: 14.5px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
-    }
+  &__search-svg {
+    position: absolute;
+    left: 14.5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
   }
 
   &__input {
@@ -102,6 +117,28 @@ function updateSearchQuery(event) {
   &__btn {
     width: 126px;
     height: 32px;
+  }
+
+  &__clear-input {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+
+  &__clear-input-svg {
+    width: 11px;
+    height: 11px;
+  }
+
+  &__clear-input-text {
+    font-weight: 600;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
   }
 }
 </style>

@@ -47,6 +47,7 @@ const filteredAndSortedNft = computed(() => {
     default:
       break
   }
+
   if (props.searchQuery) {
     sortedNft = sortedNft.filter((item) =>
       item.description.title.toLowerCase().includes(props.searchQuery.toLowerCase())
@@ -82,7 +83,8 @@ function getUserById(userId) {
         </div>
         <UIDropdown :list="['All', 'Auctions', 'Default']" @submit="(event) => (filter = event)" />
       </div>
-      <div class="cards">
+      <div v-if="filteredAndSortedNft.length === 0">There is no cards</div>
+      <div v-else class="cards">
         <div class="card" v-for="nftInfo in filteredAndSortedNft" :key="nftInfo.id">
           <div class="info__user">
             <picture>

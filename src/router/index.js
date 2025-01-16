@@ -10,8 +10,8 @@ const router = createRouter({
     },
 
     {
-      path: '/auction',
-      name: 'auction',
+      path: '/artwork',
+      name: 'artwork',
       component: () => import('@/pages/Artwork.vue')
     },
     {
