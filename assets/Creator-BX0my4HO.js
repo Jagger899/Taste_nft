@@ -1,0 +1,1 @@
+import{E as r,x as t,H as o,v as n}from"./index-D2-qoakV.js";const a={};function s(c,e){return n(),t("div",null,e[0]||(e[0]=[o("h1",null,"Creator",-1)]))}const f=r(a,[["render",s]]);export{f as default};
