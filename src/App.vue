@@ -45,12 +45,6 @@ const searchQuery = ref('');
     <SvgManager />
 
     <router-view />
-<!--
-    <PromoSLider />
-
-    <CardsNft/>
-
-    <UsersSlider/> -->
   </div>
 </template>
 

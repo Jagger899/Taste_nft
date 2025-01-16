@@ -15,10 +15,10 @@ const updateUser = function (nft) {
   currentUser.value = users.find((user) => user.id === userId)
 }
 
-const router = useRouter()
+const router = useRouter();
 
 const navigateToArtwork = () => {
-  const artworkLink = `${window.location.origin}/#/auction`
+  const artworkLink = `${window.location.origin}/#/artwork`
   window.open(artworkLink, '_blank')
 }
 
