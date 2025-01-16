@@ -1,1 +1,0 @@
-import{x as a,H as r,y as t,F as o,v as s,T as n}from"./index-D2-qoakV.js";const m={__name:"Artwork",setup(l){return(u,e)=>(s(),a(o,null,[e[0]||(e[0]=r("div",null,[r("h1",null,"Artwork")],-1)),t(n)],64))}};export{m as default};
