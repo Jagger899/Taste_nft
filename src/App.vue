@@ -3,13 +3,10 @@ import { ref } from 'vue'
 import TheHeader from '@/components/base/TheHeader.vue'
 import TheSearch from './components/base/TheSearch.vue'
 import SvgManager from '@/components/base/SvgManager.vue'
-import PromoSLider from './components/pages/main/Promo.vue'
 import UIWalletModal from './components/UI/UIWalletModal.vue'
 import { useModalStore } from './components/stores/store'
 import UIWalletModalComlete from './components/UI/UIWalletModalComlete.vue'
-import CardsNft from './components/pages/main/CardsNft.vue'
 import UIVideoModal from './components/UI/UIVideoModal.vue'
-import UsersSlider from './components/pages/main/UsersSlider.vue'
 
 const store = useModalStore()
 const cards = [

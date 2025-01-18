@@ -1,5 +1,6 @@
 <template>
   <div class="slider">
+
     <swiper
       :effect="'coverflow'"
       class="main-swiper"
@@ -17,6 +18,7 @@
       :modules="[EffectCoverflow, Pagination, Navigation]"
     >
       <swiper-slide class="slider__swiper-slide" v-for="(nft, id) in sliderNft" :key="id">
+
         <BasePicture
           :srcset="nft.photo.webp"
           :width="nft.photo.width"
@@ -24,9 +26,13 @@
           :src="nft.photo.src"
           alt="logo"
         />
+
       </swiper-slide>
+
     </swiper>
+
   </div>
+
 </template>
 
 <script setup>

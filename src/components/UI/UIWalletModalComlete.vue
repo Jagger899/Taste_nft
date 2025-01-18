@@ -9,21 +9,27 @@ const close = () => {
 </script>
 
 <template>
+
   <div v-if="store.modals.walletCompleteModal" class="wallet-complete">
+
     <div class="wallet-modal__content">
+
       <div class="wallet-modal__close" @click="close"></div>
+
       <h2 class="wallet-modal__title">Connecting wallet</h2>
+
       <img src="../../assets/fox.png" alt="fox" class="wallet-complete__img" />
+
       <h3 class="wallet-complete__description">Initializing</h3>
+
     </div>
+
   </div>
+
 </template>
 
 <style lang="scss">
-@import '@/assets/scss/base/base.scss';
-@import '@/assets/scss/base/reset.scss';
-@import '@/assets/scss/style.scss';
-@import '@/assets/scss/base/colors.scss';
+@import "@/assets/scss/style";
 
 .wallet-complete {
   position: fixed;

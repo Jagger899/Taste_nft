@@ -30,10 +30,7 @@ const props = defineProps(['userInfo'])
 </template>
 
 <style lang="scss">
-@import '@/assets/scss/base/base';
-@import '@/assets/scss/base/reset';
 @import '@/assets/scss/style';
-@import '@/assets/scss/base/colors';
 
 .users {
   border: 1px solid #333940;

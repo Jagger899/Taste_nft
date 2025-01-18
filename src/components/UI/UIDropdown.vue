@@ -48,10 +48,12 @@ function checkClick(event) {
 </script>
 
 <style scoped lang="scss">
-@import '@/assets/scss/base/base.scss';
-@import '@/assets/scss/base/reset.scss';
-@import '@/assets/scss/style.scss';
-@import '@/assets/scss/base/colors.scss';
+//@import '@/assets/scss/base/base.scss';
+//@import '@/assets/scss/base/reset.scss';
+//@import '@/assets/scss/style.scss';
+//@import '@/assets/scss/base/colors.scss';
+
+@import '@/assets/scss/style';
 
 .dropdown {
   position: relative;

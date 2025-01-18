@@ -29,13 +29,21 @@ const connectWallet = () => {
 
 <template>
   <div v-if="store.modals.walletModal" class="wallet-modal">
+
     <div class="wallet-modal__content">
+
       <div class="wallet-modal__close" @click="close"></div>
+
       <h2 class="wallet-modal__title">Connecting wallet</h2>
+
       <ul class="wallet-modal__cards">
+
         <li class="wallet-modal__card card" v-for="(item, index) in cards" :key="index">
+
           <div class="wallet-modal__number">{{ index + 1 }}.</div>
+
           <div class="card__video">
+
             <img
               src="../../assets/images/video-play.svg"
               alt="play"
@@ -43,29 +51,32 @@ const connectWallet = () => {
               @click="playVideo(index)"
             />
           </div>
+
           <h3 class="card__description">{{ item.description }}</h3>
+
         </li>
+
       </ul>
+
       <div class="wallet-modal__button">
+
         <UIButton @click="connectWallet">Connect wallet</UIButton>
+
       </div>
+
     </div>
+
   </div>
+
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/scss/base/base.scss';
-@import '@/assets/scss/base/reset.scss';
-@import '@/assets/scss/style.scss';
-@import '@/assets/scss/base/colors.scss';
+@import "@/assets/scss/style";
 
 .wallet-modal {
   position: fixed;
   display: block;
   padding-top: 65px;
-  // top: 65px;
-  // left: 50%;
-  // transform: translate(-50%, 50%);
   background: rgba(0, 0, 0, 0.6);
   top: 0;
   left: 0;

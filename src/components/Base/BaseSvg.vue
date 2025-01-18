@@ -1,7 +1,7 @@
 <template>
-  <div></div>
+  <svg><use :href="`#${id}`"></use></svg>
 </template>
 
-<script setup></script>
-
-<style scoped lang="scss"></style>
+<script setup>
+defineProps(['id'])
+</script>

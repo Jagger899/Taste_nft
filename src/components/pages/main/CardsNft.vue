@@ -1,3 +1,4 @@
+
 <script setup>
 import UIDropdown from '@/components/UI/UIDropdown.vue'
 import { nft } from '@/data/nft'
@@ -6,9 +7,9 @@ import { ref, computed, onMounted, onUnmounted, defineProps } from 'vue'
 import { users } from '@/data/users'
 import CountDown from './CountDown.vue'
 
-const sort = ref('Recently added')
-const filter = ref('All')
-const windowWidth = ref(window.innerWidth)
+const sort = ref('Recently added');
+const filter = ref('All');
+const windowWidth = ref(window.innerWidth);
 
 const props = defineProps({
   searchQuery: {
@@ -18,34 +19,34 @@ const props = defineProps({
 })
 
 function updateWindowWidth() {
-  windowWidth.value = window.innerWidth
+  windowWidth.value = window.innerWidth;
 }
 
 const filteredAndSortedNft = computed(() => {
-  let sortedNft = [...nft]
+  let sortedNft = [...nft];
   switch (sort.value) {
     case 'Recently added':
       sortedNft.sort((a, b) => b.sortInfo.recentlyAdded - a.sortInfo.recentlyAdded)
-      break
+      break;
     case 'Popular':
       sortedNft.sort((a, b) => b.sortInfo.popular - a.sortInfo.popular)
-      break
+      break;
     case 'The best':
       sortedNft.sort((a, b) => b.sortInfo.best - a.sortInfo.best)
-      break
+      break;
     default:
-      break
+      break;
   }
-  console.log(filter.value)
+
   switch (filter.value) {
     case 'Auctions':
       sortedNft = sortedNft.filter((item) => item.type === 'auction')
-      break
+      break;
     case 'Default':
       sortedNft = sortedNft.filter((item) => item.type === 'default')
-      break
+      break;
     default:
-      break
+      break;
   }
 
   if (props.searchQuery) {
@@ -53,40 +54,57 @@ const filteredAndSortedNft = computed(() => {
       item.description.title.toLowerCase().includes(props.searchQuery.toLowerCase())
     )
   }
-  let limit = 12
+
+  let limit = 12;
+
   if (windowWidth.value < 1024 && windowWidth.value > 768) {
-    limit = 8
+    limit = 8;
   } else if (windowWidth.value < 768) {
-    limit = 6
+    limit = 6;
   }
-  return sortedNft.slice(0, limit)
+  return sortedNft.slice(0, limit);
 })
 
 onMounted(() => {
   window.addEventListener('resize', updateWindowWidth)
-})
+});
 
 function getUserById(userId) {
-  return users.find((user) => user.id === userId) || {}
-}
+  return users.find((user) => user.id === userId) || {};
+};
+
 </script>
 
 <template>
   <section class="nft-cards">
+
     <div class="container">
+
       <div class="dropdowns">
+
         <div class="dropdowns__box">
+
           <UIDropdown
             :list="['Recently added', 'Popular', 'The best']"
             @submit="(event) => (sort = event)"
           />
+
         </div>
-        <UIDropdown :list="['All', 'Auctions', 'Default']" @submit="(event) => (filter = event)" />
+
+        <UIDropdown
+          :list="['All', 'Auctions', 'Default']"
+          @submit="(event) => (filter = event)"
+        />
       </div>
+
       <div v-if="filteredAndSortedNft.length === 0">There is no cards</div>
+
       <div v-else class="cards">
+
         <div class="card" v-for="nftInfo in filteredAndSortedNft" :key="nftInfo.id">
+
           <div class="info__user">
+
             <picture>
               <source :srcset="getUserById(nftInfo.user).photo.srcset" type="image/webp" />
               <img
@@ -95,10 +113,15 @@ function getUserById(userId) {
                 :alt="getUserById(nftInfo.user).photo.alt"
               />
             </picture>
+
             <div class="info__user-info">
+
               <p class="info__user-name">{{ getUserById(nftInfo.user).name }}</p>
+
               <p class="info__user-nick">{{ getUserById(nftInfo.user).nickname }}</p>
+
             </div>
+
           </div>
 
           <BasePicture
@@ -112,37 +135,53 @@ function getUserById(userId) {
           />
 
           <div class="card__info">
+
             <h2 class="card__title">{{ nftInfo.description.title }}</h2>
+
             <div class="card__info-sold card__info-sold_first">
+
               <p class="card__info-text">Sold for:</p>
+
               <div class="card__info-advant">
+
                 <svg class="card__info-advant-svg">
                   <use xlink:href="#tongue"></use>
                 </svg>
+
                 <p class="card__info-advant-number">{{ nftInfo.price.quantity }}M</p>
+
               </div>
+
             </div>
+
             <div class="card__info-sold">
+
               <p class="card__info-text">Ending in:</p>
+
               <CountDown
                 class="card__info-advant-number"
                 v-if="nftInfo.price.time"
                 :initial-time="nftInfo.price.time * 3600"
               />
+
               <p class="card__info-advant-number" v-else>Sold</p>
+
             </div>
+
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   </section>
+
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/scss/base/base';
-@import '@/assets/scss/base/reset';
 @import '@/assets/scss/style';
-@import '@/assets/scss/base/colors';
 
 .nft-cards {
 }

@@ -8,6 +8,7 @@ import { users } from '@/data/users'
 import { defineProps } from 'vue'
 import CountDown from '../pages/main/CountDown.vue'
 import UIButton from '../UI/UIButton.vue'
+import BaseSvg from '@/components/base/BaseSvg.vue'
 
 const props = defineProps({
   searchQuery: {
@@ -67,40 +68,60 @@ function showAllCards() {
   sort.value = 'Recently added';
   filter.value = 'All';
 }
+
 </script>
 
 <template>
-  <div v-if="store.modals.searchModal" class="search" @scroll.prevent="">
+  <div v-if="store.modals.searchModal" class="search" @scroll.prevent="" >
+
     <div class="container">
+
       <div class="search__content">
+
         <div class="search__close" @click="store.closeModal('searchModal')"></div>
+
         <div class="search__nft-cards">
+
           <div class="dropdowns">
+
             <UIDropdown
               :list="['Recently added', 'Popular', 'The best']"
               @submit="(event) => (sort = event)"
             />
+
             <UIDropdown
               :list="['All', 'Auctions', 'Default']"
               @submit="(event) => (filter = event)"
             />
           </div>
+
           <div v-if="filteredAndSortedNft.length === 0" class="no-cards">There is no cards</div>
+
           <div v-else class="cards">
+
             <div class="card" v-for="nftInfo in filteredAndSortedNft" :key="nftInfo.id">
+
               <div class="info__user">
+
                 <picture>
+
                   <source :srcset="getUserById(nftInfo.user).photo.srcset" type="image/webp" />
+
                   <img
                     class="info__user-img"
                     :src="getUserById(nftInfo.user).photo.src"
                     :alt="getUserById(nftInfo.user).photo.alt"
                   />
                 </picture>
+
                 <div class="info__user-info">
+
                   <p class="info__user-name">{{ getUserById(nftInfo.user).name }}</p>
+
                   <p class="info__user-nick">{{ getUserById(nftInfo.user).nickname }}</p>
+
                 </div>
+
               </div>
 
               <BasePicture
@@ -114,42 +135,66 @@ function showAllCards() {
               />
 
               <div class="card__info">
+
                 <h2 class="card__title">{{ nftInfo.description.title }}</h2>
+
                 <div class="card__info-sold card__info-sold_first">
+
                   <p class="card__info-text">Sold for:</p>
+
                   <div class="card__info-advant">
-                    <svg class="card__info-advant-svg">
-                      <use xlink:href="#tongue"></use>
-                    </svg>
+
+                    <BaseSvg id="tongue" class="card__info-advant-svg"/>
+
                     <p class="card__info-advant-number">{{ nftInfo.price.quantity }}M</p>
+
                   </div>
+
                 </div>
+
                 <div class="card__info-sold">
+
                   <p class="card__info-text">Ending in:</p>
+
                   <CountDown
                     class="card__info-advant-number"
                     v-if="nftInfo.price.time"
                     :initial-time="nftInfo.price.time * 3600"
                   />
+
                   <p class="card__info-advant-number" v-else>Sold</p>
+
                 </div>
+
               </div>
+
             </div>
+
           </div>
+
           <div class="cards__btn">
+
             <UIButton @click="showAllCards">Show All</UIButton>
+
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   </div>
+
 </template>
 
 <style scoped lang="scss">
-@import '@/assets/scss/base/base';
-@import '@/assets/scss/base/reset';
+//@import '@/assets/scss/base/base';
+//@import '@/assets/scss/base/reset';
+//@import '@/assets/scss/style';
+//@import '@/assets/scss/base/colors';
+
 @import '@/assets/scss/style';
-@import '@/assets/scss/base/colors';
 
 .search {
   position: fixed;

@@ -1,29 +1,30 @@
 <script setup>
-import { Swiper, SwiperSlide } from 'swiper/vue'
 import CoverflowSlider from './PromoSLider.vue'
 import { users } from '@/data/users.js'
 import { ref } from 'vue'
 import UIButton from '@/components/UI/UIButton.vue'
 import { useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
+import { nft } from '@/data/nft.js'
+import BasePicture from '@/components/base/BasePicture.vue'
+import BaseSvg from '@/components/base/BaseSvg.vue'
 
-const currentUser = ref(users[0])
-console.log(currentUser.value)
+const currentUser = ref(users[0]);
 
 const updateUser = function (nft) {
-  const userId = nft.user
-  currentUser.value = users.find((user) => user.id === userId)
+  const userId = nft.user;
+  currentUser.value = users.find((user) => user.id === userId);
 }
 
 const router = useRouter();
 
-const navigateToArtwork = () => {
-  const artworkLink = `${window.location.origin}/#/artwork`
-  window.open(artworkLink, '_blank')
+const navigateToArtwork = function() {
+  const artworkLink = `${import.meta.env.BASE_URL}/#/artwork`;
+  window.open(artworkLink, '_blank');
 }
 
-const copyArtworkLink = () => {
-  const artworkLink = `${window.location.origin}/#/artwork`
+const copyArtworkLink = function() {
+  const artworkLink = `${import.meta.env.BASE_URL}/#/artwork`;
   navigator.clipboard
     .writeText(artworkLink)
     .then(() => {
@@ -33,70 +34,92 @@ const copyArtworkLink = () => {
       toast.error('Не удалось скопировать ссылку.')
     })
 }
+
 </script>
 
 <template>
   <section class="promo">
+
     <div class="container">
+
       <div class="promo__inner">
+
         <div v-if="currentUser" class="promo__info info">
+
           <div class="info__user">
-            <picture>
-              <source :srcset="currentUser.photo.srcset" type="image/webp" />
-              <img
-                class="info__user-img"
-                :src="currentUser.photo.src"
-                :alt="currentUser.photo.alt"
-              />
-            </picture>
+
+            <BasePicture
+              :srcset="currentUser.photo.webp"
+              :width="currentUser.photo.width"
+              :height="currentUser.photo.height"
+              :src="currentUser.photo.src"
+              alt="logo"
+            />
+
             <div class="info__user-info">
+
               <p class="info__user-name">{{ currentUser.name }}</p>
+
               <p class="info__user-nick">{{ currentUser.nickname }}</p>
+
             </div>
+
           </div>
+
           <h1 class="info__title">WFH - art name</h1>
+
           <p class="info__description">
             {{ currentUser.description }}
           </p>
+
           <div class="info__results">
+
             <div class="info__sold">
+
               <p class="info__sold-text">Sold for:</p>
+
               <div class="info__sold-number">
-                <svg class="info__sold-number-svg">
-                  <use xlink:href="#tongue"></use>
-                </svg>
+
+                <BaseSvg id="tongue" class="info__sold-number-svg"/>
+
                 <p class="info__sold-number-value">{{ currentUser.sales.quantity }}M</p>
+
               </div>
+
             </div>
+
             <div class="info__socials">
+
               <div class="info__button">
+
                 <UIButton>View</UIButton>
+
               </div>
-              <svg class="info__socials-svg" @click="navigateToArtwork">
-                <use xlink:href="#external"></use>
-              </svg>
-              <svg class="info__socials-svg" @click="copyArtworkLink">
-                <use xlink:href="#share"></use>
-              </svg>
-              <svg class="info__socials-svg">
-                <use xlink:href="#vertical-more"></use>
-              </svg>
+
+              <BaseSvg id="external" class="info__socials-svg" @click="navigateToArtwork"/>
+
+              <BaseSvg id="share" class="info__socials-svg" @click="copyArtworkLink"/>
+
+              <BaseSvg id="vertical-more" class="info__socials-svg"/>
+
             </div>
+
           </div>
+
         </div>
+
         <div class="promo__slider">
           <CoverflowSlider @activeSlide="updateUser" />
         </div>
+
       </div>
+
     </div>
   </section>
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/base/base';
-@import '@/assets/scss/base/reset';
-@import '@/assets/scss/style';
-@import '@/assets/scss/base/colors';
+@import "@/assets/scss/style";
 
 .promo {
   margin-top: 96px;

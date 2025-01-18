@@ -2,6 +2,7 @@
 import UIButton from '@/components/UI/UIButton.vue'
 import { ref, watch } from 'vue'
 import { useModalStore } from '../stores/store'
+import BaseSvg from '@/components/base/BaseSvg.vue'
 
 const searchQuery = ref('');
 const emit = defineEmits(['update:searchQuery']);
@@ -25,17 +26,22 @@ function clearSearchQuery() {
 
 <template>
   <header class="header">
+
     <div class="header__logo">
+
       <picture>
         <source srcset="/public/logo.webp" type="image/webp" />
         <img class="header__img" src="/public/logo.png" alt="logo" />
       </picture>
+
     </div>
 
     <div class="header__search">
-      <svg class="header__search-svg">
-        <use xlink:href="#search"></use>
-      </svg>
+<!--      <svg class="header__search-svg">-->
+<!--        <use xlink:href="#search"></use>-->
+<!--      </svg>-->
+
+      <BaseSvg class="header__search-svg" id="search"/>
 
       <input
         class="header__input"
@@ -46,17 +52,23 @@ function clearSearchQuery() {
       />
 
       <div v-if="searchQuery" class="header__clear-input" @click="clearSearchQuery">
-        <svg class="header__clear-input-svg">
-          <use xlink:href="#clear-input"></use>
-        </svg>
+
+        <BaseSvg id="clear-input" class="header__clear-input-svg" />
+
         <p class="header__clear-input-text">Clear</p>
+
       </div>
+
     </div>
 
     <div class="header__btn">
+
       <UIButton modalName="walletModal">Connect wallet</UIButton>
+
     </div>
+
   </header>
+
 </template>
 
 <style lang="scss" scoped>
