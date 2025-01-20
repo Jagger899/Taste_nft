@@ -2,12 +2,37 @@
 import PromoSLider from '@/components/pages/main/Promo.vue';
 import CardsNft from '@/components/pages/main/CardsNft.vue';
 import UsersSlider from '@/components/pages/main/UsersSlider.vue';
+import UIDropdown from '@/components/UI/UIDropdown.vue';
+import { ref } from 'vue'
+
+const sort = ref('Recently added');
+const filter = ref('All');
+const windowWidth = ref(window.innerWidth);
 </script>
 
 <template>
   <div class="main">
     <PromoSLider />
-    <CardsNft />
+    <div class="container">
+      <div class="dropdowns">
+
+        <div class="dropdowns__box">
+
+          <UIDropdown
+            :list="['Recently added', 'Popular', 'The best']"
+            @submit="(event) => (sort = event)"
+          />
+
+        </div>
+
+        <UIDropdown
+          :list="['All', 'Auctions', 'Default']"
+          @submit="(event) => (filter = event)"
+        />
+      </div>
+    </div>
+
+    <CardsNft :sort="sort" :filter="filter" />
     <UsersSlider />
   </div>
 </template>
@@ -15,6 +40,13 @@ import UsersSlider from '@/components/pages/main/UsersSlider.vue';
 
 
 <style lang="scss" scoped>
-
+.dropdowns {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  &__box {
+    width: 168px;
+  }
+}
 </style>
 

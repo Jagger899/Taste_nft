@@ -52,10 +52,6 @@ const modules = [Scrollbar];
 </template>
 
 <style lang="scss">
-//@import '@/assets/scss/base/base';
-//@import '@/assets/scss/base/reset';
-//@import '@/assets/scss/style';
-//@import '@/assets/scss/base/colors';
 
 @import '@/assets/scss/style';
 

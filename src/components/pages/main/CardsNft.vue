@@ -12,11 +12,19 @@ const filter = ref('All');
 const windowWidth = ref(window.innerWidth);
 
 const props = defineProps({
+  sort: {
+    type: String,
+    default: 'Recently added'
+  },
+  filter: {
+    type: String,
+    default: 'All'
+  },
   searchQuery: {
     type: String,
     default: ''
   }
-})
+});
 
 function updateWindowWidth() {
   windowWidth.value = window.innerWidth;
@@ -24,7 +32,7 @@ function updateWindowWidth() {
 
 const filteredAndSortedNft = computed(() => {
   let sortedNft = [...nft];
-  switch (sort.value) {
+  switch (props.sort) {
     case 'Recently added':
       sortedNft.sort((a, b) => b.sortInfo.recentlyAdded - a.sortInfo.recentlyAdded)
       break;
@@ -38,7 +46,7 @@ const filteredAndSortedNft = computed(() => {
       break;
   }
 
-  switch (filter.value) {
+  switch (props.filter) {
     case 'Auctions':
       sortedNft = sortedNft.filter((item) => item.type === 'auction')
       break;
@@ -71,7 +79,7 @@ onMounted(() => {
 
 function getUserById(userId) {
   return users.find((user) => user.id === userId) || {};
-};
+}
 
 </script>
 
@@ -79,23 +87,6 @@ function getUserById(userId) {
   <section class="nft-cards">
 
     <div class="container">
-
-      <div class="dropdowns">
-
-        <div class="dropdowns__box">
-
-          <UIDropdown
-            :list="['Recently added', 'Popular', 'The best']"
-            @submit="(event) => (sort = event)"
-          />
-
-        </div>
-
-        <UIDropdown
-          :list="['All', 'Auctions', 'Default']"
-          @submit="(event) => (filter = event)"
-        />
-      </div>
 
       <div v-if="filteredAndSortedNft.length === 0">There is no cards</div>
 
@@ -184,15 +175,6 @@ function getUserById(userId) {
 @import '@/assets/scss/style';
 
 .nft-cards {
-}
-
-.dropdowns {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
-  &__box {
-    width: 168px;
-  }
 }
 
 .cards {
