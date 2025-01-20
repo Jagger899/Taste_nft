@@ -37,8 +37,6 @@ const windowWidth = ref(window.innerWidth);
   </div>
 </template>
 
-
-
 <style lang="scss" scoped>
 .dropdowns {
   display: flex;

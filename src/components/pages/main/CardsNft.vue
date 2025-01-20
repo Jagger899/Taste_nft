@@ -6,10 +6,12 @@ import BasePicture from '@/components/base/BasePicture.vue'
 import { ref, computed, onMounted, onUnmounted, defineProps } from 'vue'
 import { users } from '@/data/users'
 import CountDown from './CountDown.vue'
+import { useRouter } from 'vue-router';
 
 const sort = ref('Recently added');
 const filter = ref('All');
 const windowWidth = ref(window.innerWidth);
+const router = useRouter();
 
 const props = defineProps({
   sort: {
@@ -81,6 +83,10 @@ function getUserById(userId) {
   return users.find((user) => user.id === userId) || {};
 }
 
+function goToArtwork(nftId) {
+  router.push({ path: '/artwork', query: { id: nftId } });
+}
+
 </script>
 
 <template>
@@ -92,7 +98,7 @@ function getUserById(userId) {
 
       <div v-else class="cards">
 
-        <div class="card" v-for="nftInfo in filteredAndSortedNft" :key="nftInfo.id">
+        <div class="card" v-for="nftInfo in filteredAndSortedNft" :key="nftInfo.id" @click="goToArtwork(nftInfo.id)">
 
           <div class="info__user">
 
