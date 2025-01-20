@@ -1,1 +1,0 @@
-import{m as r,f as t,s as o,e as n}from"./index-Mp_L_H1Y.js";const s={};function a(c,e){return n(),t("div",null,e[0]||(e[0]=[o("h1",null,"Creator",-1)]))}const f=r(s,[["render",a]]);export{f as default};

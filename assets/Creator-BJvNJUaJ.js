@@ -1,0 +1,1 @@
+import{m as r,f as t,t as o,e as n}from"./index-DhGYCRBD.js";const a={};function s(c,e){return n(),t("div",null,e[0]||(e[0]=[o("h1",null,"Creator",-1)]))}const f=r(a,[["render",s]]);export{f as default};
