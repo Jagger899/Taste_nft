@@ -1,49 +1,43 @@
 <script setup>
-import CoverflowSlider from './PromoSLider.vue'
-import { users } from '@/data/users.js'
-import { ref } from 'vue'
-import UIButton from '@/components/UI/UIButton.vue'
-import { useRouter } from 'vue-router'
-import { toast } from 'vue3-toastify'
-import { nft } from '@/data/nft.js'
-import BasePicture from '@/components/base/BasePicture.vue'
+
+import { socialIcons } from '@/components/composable/copyLink.js'
 import BaseSvg from '@/components/base/BaseSvg.vue'
-import {openPageInNewTab, copyPageLink, socialIcons} from '@/components/composable/copyLink.js'
+import BasePicture from '@/components/base/BasePicture.vue'
+import UIButton from '@/components/UI/UIButton.vue'
+import { users } from '@/data/users.js'
+import { ref, watch } from 'vue'
+
+const props = defineProps({
+  nftId: {
+    type: Number,
+    required: false
+  }
+});
 
 const currentUser = ref(users[0]);
 
-const updateUser = function (nft) {
-  const userId = nft.user;
-  currentUser.value = users.find((user) => user.id === userId);
-}
+const updateUser = (id) => {
+  const foundUser = users.find(user => user.id === id);
+  if (foundUser) {
+    currentUser.value = foundUser;
+  } else {
+    const randomIndex = Math.floor(Math.random() * users.length);
+    currentUser.value = users[randomIndex];
+  }
+};
 
-const router = useRouter();
-
-// const navigateToArtwork = function() {
-//   const artworkLink = `${import.meta.env.BASE_URL}/#/artwork`;
-//   window.open(artworkLink, '_blank');
-// }
-
-// const copyArtworkLink = function() {
-//   const artworkLink = `${import.meta.env.BASE_URL}/#/artwork`;
-//   navigator.clipboard
-//     .writeText(artworkLink)
-//     .then(() => {
-//       toast.success('Ссылка скопирована!')
-//     })
-//     .catch(() => {
-//       toast.error('Не удалось скопировать ссылку.')
-//     })
-// }
+watch(() => props.nftId, (newId) => {
+  updateUser(newId);
+}, { immediate: true});
 
 </script>
 
 <template>
-  <section class="promo">
+  <section class="users">
 
     <div class="container">
 
-      <div class="promo__inner">
+      <div class="info__inner">
 
         <div v-if="currentUser" class="promo__info info">
 
@@ -97,12 +91,6 @@ const router = useRouter();
 
               </div>
 
-<!--              <BaseSvg id="external" class="info__socials-svg" @click="openPageInNewTab('/artwork')"/>-->
-
-<!--              <BaseSvg id="share" class="info__socials-svg" @click="copyPageLink('/artwork')"/>-->
-
-<!--              <BaseSvg id="vertical-more" class="info__socials-svg"/>-->
-
               <BaseSvg
                 v-for="(icon) in socialIcons"
                 :key="icon"
@@ -116,21 +104,16 @@ const router = useRouter();
           </div>
 
         </div>
-
-        <div class="promo__slider">
-          <CoverflowSlider @activeSlide="updateUser" />
-        </div>
-
       </div>
 
     </div>
   </section>
 </template>
 
-<style lang="scss" scoped>
-@import "@/assets/scss/style";
+<style scoped lang="scss">
+@import '@/assets/scss/style';
 
-.promo {
+.users {
   margin-top: 96px;
   margin-bottom: 80px;
   overflow: hidden;
@@ -164,7 +147,7 @@ const router = useRouter();
       gap: 12px;
     }
 
-    &__user-img {
+    img {
       border-radius: 12px;
       width: 49px;
       height: 49px;

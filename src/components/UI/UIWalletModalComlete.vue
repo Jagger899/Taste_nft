@@ -1,11 +1,15 @@
 <script setup>
 import { useModalStore } from '@/components/stores/store'
+import BaseSvg from '@/components/base/BaseSvg.vue'
+import { onMounted, onUnmounted } from 'vue'
 
 const store = useModalStore();
 
 const close = () => {
   store.closeModal('walletCompleteModal');
+  console.log('Closing modal...');
 };
+
 </script>
 
 <template>
@@ -18,8 +22,10 @@ const close = () => {
 
       <h2 class="wallet-modal__title">Connecting wallet</h2>
 
-      <img src="../../assets/fox.png" alt="fox" class="wallet-complete__img" />
-
+      <div class="wallet-complete__img-box">
+        <img src="../../assets/fox.png" alt="fox" class="wallet-complete__img" />
+        <BaseSvg class="wallet-complete__svg" id="circle-load" />
+      </div>
       <h3 class="wallet-complete__description">Initializing</h3>
 
     </div>
@@ -44,8 +50,23 @@ const close = () => {
   z-index: 10;
   overflow: auto;
 
-  &__img {
+  &__img-box {
+    position: relative;
     margin-bottom: 10px;
+    width:60px;
+    height:60px;
+  }
+
+  &__svg {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    left: 0;
+    animation: rotate 900ms linear infinite;
+  }
+
+  &__img {
+
   }
 
   &__description {
@@ -107,6 +128,14 @@ const close = () => {
     border-radius: 2px;
     background: $whiteColor;
     transform: rotate(45deg);
+  }
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 </style>

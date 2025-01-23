@@ -1,18 +1,31 @@
 <script setup>
 import TheHeader from '@/components/base/TheHeader.vue';
 import { nft } from '@/data/nft';
-import { ref } from 'vue';
+import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router';
 import BasePicture from '@/components/base/BasePicture.vue'
 import UIButton from '@/components/UI/UIButton.vue'
 import BaseSvg from '@/components/base/BaseSvg.vue'
 import CountDown from '@/components/pages/main/CountDown.vue'
 import UIPlaceBidModal from '@/components/UI/UIPlaceBidModal.vue'
+import CardsNft from '@/components/pages/main/CardsNft.vue'
+import UsersActivityInfo from '@/components/pages/artwork/UsersActivityInfo.vue'
+import { users } from '@/data/users.js';
 
 const route = useRoute();
 const nftId = Number(route.query.id) || 0;
 
-const currentNft = ref(nft.find(item => item.id === nftId));
+
+const currentNft = ref(nft.find(item => item.id === nftId) || nft[0]);
+
+const currentUser = ref(users.find(user => user.id === nftId) || users[Math.floor(Math.random() * users.length)]);
+
+watch(() => route.query.id, (newId) => {
+  const id = +newId || 0;
+  currentNft.value = nft.find(item => item.id === id) || nft[0];
+  currentUser.value = users.find(user => user.id === id) || users[Math.floor(Math.random() * users.length)];
+});
+
 </script>
 
 <template>
@@ -73,7 +86,12 @@ const currentNft = ref(nft.find(item => item.id === nftId));
     </div>
 
   </section>
+
   <UIPlaceBidModal/>
+
+  <UsersActivityInfo :user="currentUser"/>
+
+  <CardsNft/>
 </template>
 
 <style lang="scss" scoped>

@@ -4,7 +4,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue';
-import { useTimer } from '@/components/reusable/timer';
+import { useTimer } from '@/components/composable/timer.js';
 
 const props = defineProps({
   initialTime: {

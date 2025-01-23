@@ -39,6 +39,9 @@ watch(input, (newValue) => {
 const openCompleteModal = function() {
   store.closeModal('placeBidModal');
   store.openModal('walletCompleteModal');
+  setTimeout(() => {
+    store.closeModal('walletCompleteModal');
+  }, 2000);
 };
 
 </script>
