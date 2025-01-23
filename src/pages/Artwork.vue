@@ -7,6 +7,7 @@ import BasePicture from '@/components/base/BasePicture.vue'
 import UIButton from '@/components/UI/UIButton.vue'
 import BaseSvg from '@/components/base/BaseSvg.vue'
 import CountDown from '@/components/pages/main/CountDown.vue'
+import UIPlaceBidModal from '@/components/UI/UIPlaceBidModal.vue'
 
 const route = useRoute();
 const nftId = Number(route.query.id) || 0;
@@ -28,6 +29,7 @@ const currentNft = ref(nft.find(item => item.id === nftId));
           :width="currentNft.photo.width"
           :height="currentNft.photo.height"
           :alt="currentNft.photo.alt"
+
         />
 
         <div class="artwork__top-activity activity">
@@ -62,7 +64,7 @@ const currentNft = ref(nft.find(item => item.id === nftId));
           </div>
           <div class="activity__button">
 
-            <UIButton>Place a bid</UIButton>
+            <UIButton modalName="placeBidModal">Place a bid</UIButton>
 
           </div>
 
@@ -71,6 +73,7 @@ const currentNft = ref(nft.find(item => item.id === nftId));
     </div>
 
   </section>
+  <UIPlaceBidModal/>
 </template>
 
 <style lang="scss" scoped>
@@ -79,6 +82,10 @@ const currentNft = ref(nft.find(item => item.id === nftId));
 .artwork {
   margin-top: 96px;
 
+  img {
+    height: 72px;
+  }
+
   @include media-breakpoint-down(xs) {
     padding-top: unset;
     height: 400px;
@@ -86,6 +93,7 @@ const currentNft = ref(nft.find(item => item.id === nftId));
 
   &__top-activity {
     margin: 0 auto;
+    transform: translateY(-50%);
   }
 }
 
@@ -109,7 +117,7 @@ const currentNft = ref(nft.find(item => item.id === nftId));
       height: 43px;
       border-radius: 12px;
       right: -20px;
-      bottom: 20px;
+      bottom: 0;
     }
   }
 
@@ -146,6 +154,20 @@ const currentNft = ref(nft.find(item => item.id === nftId));
     font-size: 14px;
     color: rgba(255, 255, 255, 0.5);
     margin-bottom: 8px;
+  }
+
+  &__ending {
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      background: #ffffff26;
+      width: 3px;
+      height: 43px;
+      border-radius: 12px;
+      right: -20px;
+      bottom: 0;
+    }
   }
 
   &__ending-time {

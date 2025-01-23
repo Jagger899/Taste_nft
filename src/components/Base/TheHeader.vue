@@ -28,7 +28,6 @@ function clearSearchQuery() {
   <header class="header">
 
     <div class="header__logo">
-
       <picture>
         <source srcset="/public/logo.webp" type="image/webp" />
         <img class="header__img" src="/public/logo.png" alt="logo" />

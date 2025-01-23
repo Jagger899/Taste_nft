@@ -3,10 +3,11 @@ import { useModalStore } from '@/components/stores/store'
 const store = useModalStore();
 const props = defineProps({
   modalName: String,
+  disabled: Boolean
 });
 
 const handleClick = () => {
-  if (props.modalName) {
+  if (!props.disabled && props.modalName) {
     store.openModal(props.modalName);
   }
 };
@@ -15,7 +16,7 @@ const handleClick = () => {
 </script>
 
 <template>
-  <button @click="handleClick">
+  <button @click="handleClick" :disabled="disabled">
     <slot></slot>
   </button>
 </template>
@@ -40,6 +41,22 @@ button {
   border: none;
   cursor: pointer;
   overflow: hidden;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+
+  &:disabled:after {
+    display: none;
+  }
+
+  &:disabled:hover:after {
+    animation: none;
+  }
+
+  &:disabled:active {
+    transform: none;
+  }
 
   &:after {
     content: '';

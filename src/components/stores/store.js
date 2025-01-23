@@ -6,7 +6,8 @@ export const useModalStore = defineStore('modal', () => {
     walletModal: false,
     walletCompleteModal: false,
     videoModal: false,
-    searchModal: false
+    searchModal: false,
+    placeBidModal: false,
   })
 
   const activeVideoUrl = reactive({
