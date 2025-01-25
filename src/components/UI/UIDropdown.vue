@@ -110,8 +110,6 @@ function checkClick(event) {
     }
   }
 
-
-
   &__list {
     overflow: hidden;
     position: absolute;

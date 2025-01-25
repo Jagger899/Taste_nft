@@ -97,12 +97,6 @@ const router = useRouter();
 
               </div>
 
-<!--              <BaseSvg id="external" class="info__socials-svg" @click="openPageInNewTab('/artwork')"/>-->
-
-<!--              <BaseSvg id="share" class="info__socials-svg" @click="copyPageLink('/artwork')"/>-->
-
-<!--              <BaseSvg id="vertical-more" class="info__socials-svg"/>-->
-
               <BaseSvg
                 v-for="(icon) in socialIcons"
                 :key="icon"

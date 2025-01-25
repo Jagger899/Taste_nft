@@ -7,6 +7,8 @@ import { ref } from 'vue'
 
 const sort = ref('Recently added');
 const filter = ref('All');
+const reduce = ref('RedAddTitle');
+const pop = ref(null);
 const windowWidth = ref(window.innerWidth);
 </script>
 
@@ -29,10 +31,15 @@ const windowWidth = ref(window.innerWidth);
           :list="['All', 'Auctions', 'Default']"
           @submit="(event) => (filter = event)"
         />
+
+        <UIDropdown
+          :list="['RedAddTitle', 'RedAddPop', 'FindFirst', 'MapChangeSold','Reverse','Pop']"
+          @submit="(event) => (reduce = event)"
+        />
       </div>
     </div>
 
-    <CardsNft :sort="sort" :filter="filter" />
+    <CardsNft :sort="sort" :filter="filter" :reduce="reduce" :pop="pop" />
     <UsersSlider />
   </div>
 </template>

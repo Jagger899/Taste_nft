@@ -22,6 +22,14 @@ const props = defineProps({
     type: String,
     default: 'All'
   },
+  reduce:{
+    type:String,
+    default: 'RedAddTitle'
+  },
+  pop:{
+    type:String,
+    default:null
+  },
   searchQuery: {
     type: String,
     default: ''
@@ -48,6 +56,45 @@ const filteredAndSortedNft = computed(() => {
       break;
   }
 
+
+  switch (props.reduce) {
+    case 'RedAddTitle':
+      sortedNft.reduce((acc, curr) => {
+        console.log(curr);
+
+        switch (true) {
+          case curr.description.title.includes('Digital') && !curr.description.title.includes('Popular'):
+            curr.description.title += ' Popular';
+            break;
+
+          case curr.description.title.includes('Paradise') && !curr.description.title.includes('Badly'):
+            curr.description.title += ' Badly';
+            break;
+
+          default:
+            if (!curr.description.title.match(/\b(Popular|Badly|Initial)\b/)) {
+              curr.description.title += ' Initial';
+            }
+            break;
+        }
+        return acc;
+      }, []);
+      break;
+
+    case 'RedAddPop':
+      sortedNft.reduce((acc, curr) => {
+       const title = curr.description.title.split(' ').pop().join(' ');
+        console.log(title);
+        return title;
+      }, []);
+      break;
+
+    default:
+      break;
+  }
+
+
+
   switch (props.filter) {
     case 'Auctions':
       sortedNft = sortedNft.filter((item) => item.type === 'auction')
@@ -72,11 +119,18 @@ const filteredAndSortedNft = computed(() => {
   } else if (windowWidth.value < 768) {
     limit = 6;
   }
+
+  if(props.pop) {
+    sortedNft.pop();
+    console.log(sortedNft);
+  }
+
   return sortedNft.slice(0, limit);
+
 })
 
 onMounted(() => {
-  window.addEventListener('resize', updateWindowWidth)
+  window.addEventListener('resize', updateWindowWidth);
 });
 
 function getUserById(userId) {
@@ -133,7 +187,13 @@ function goToArtwork(nftId) {
 
           <div class="card__info">
 
-            <h2 class="card__title">{{ nftInfo.description.title }}</h2>
+            <h2 class="card__title">
+
+              {{ nftInfo.description.title }}
+
+
+
+            </h2>
 
             <div class="card__info-sold card__info-sold_first">
 
@@ -257,6 +317,10 @@ function goToArtwork(nftId) {
     font-size: 20px;
     color: $whiteColor;
     margin-bottom: 17px;
+  }
+
+  &__title-info {
+    color: #8743ff;
   }
 }
 

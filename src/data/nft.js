@@ -8,6 +8,7 @@ export const nft = [
     },
     user: 0,
     owner: 3,
+    userId:2,
     status: 'approved',
     description: {
       title: 'Stellar Melody',
@@ -188,6 +189,7 @@ export const nft = [
     },
     user: 3,
     owner: 1,
+    userId:2,
     description: {
       title: 'Digital Fantasy',
       count: '4 of 10',

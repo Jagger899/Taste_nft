@@ -21,7 +21,7 @@ const currentNft = ref(nft.find(item => item.id === nftId) || nft[0]);
 const currentUser = ref(users.find(user => user.id === nftId) || users[Math.floor(Math.random() * users.length)]);
 
 watch(() => route.query.id, (newId) => {
-  const id = +newId || 0;
+  const id = Number(newId) || 0;
   currentNft.value = nft.find(item => item.id === id) || nft[0];
   currentUser.value = users.find(user => user.id === id) || users[Math.floor(Math.random() * users.length)];
 });
