@@ -9,6 +9,8 @@ const sort = ref('Recently added');
 const filter = ref('All');
 const reduce = ref('RedAddTitle');
 const pop = ref(null);
+const map = ref('Default');
+const anotherMethods = ref('AnotherMethods');
 const windowWidth = ref(window.innerWidth);
 </script>
 
@@ -33,13 +35,29 @@ const windowWidth = ref(window.innerWidth);
         />
 
         <UIDropdown
-          :list="['RedAddTitle', 'RedAddPop', 'FindFirst', 'MapChangeSold','Reverse','Pop']"
+          :list="['RedAddTitle', 'RedAddPop']"
           @submit="(event) => (reduce = event)"
+        />
+        <UIDropdown
+          :list="['Default', 'MapChangeCost', 'MapChangePopul']"
+          @submit="(event) => (map = event)"
+        />
+        <UIDropdown
+          :list="['Another methods', 'Pop', 'Includes','Reverse']"
+          @submit="(event) => (anotherMethods = event)"
         />
       </div>
     </div>
 
-    <CardsNft :sort="sort" :filter="filter" :reduce="reduce" :pop="pop" />
+    <CardsNft
+      :sort="sort"
+      :filter="filter"
+      :reduce="reduce"
+      :pop="pop"
+      :map="map"
+      :another-methods="anotherMethods"
+    />
+
     <UsersSlider />
   </div>
 </template>

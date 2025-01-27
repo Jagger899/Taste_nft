@@ -1,15 +1,13 @@
 
 <script setup>
-import UIDropdown from '@/components/UI/UIDropdown.vue'
-import { nft } from '@/data/nft'
-import BasePicture from '@/components/base/BasePicture.vue'
-import { ref, computed, onMounted, onUnmounted, defineProps } from 'vue'
-import { users } from '@/data/users'
-import CountDown from './CountDown.vue'
+import UIDropdown from '@/components/UI/UIDropdown.vue';
+import { nft } from '@/data/nft';
+import BasePicture from '@/components/base/BasePicture.vue';
+import { ref, computed, onMounted } from 'vue';
+import { users } from '@/data/users';
+import CountDown from './CountDown.vue';
 import { useRouter } from 'vue-router';
 
-const sort = ref('Recently added');
-const filter = ref('All');
 const windowWidth = ref(window.innerWidth);
 const router = useRouter();
 
@@ -22,13 +20,21 @@ const props = defineProps({
     type: String,
     default: 'All'
   },
-  reduce:{
-    type:String,
+  reduce: {
+    type: String,
     default: 'RedAddTitle'
   },
-  pop:{
-    type:String,
-    default:null
+  pop: {
+    type: String,
+    default: null
+  },
+  map: {
+    type: String,
+    default: 'Default'
+  },
+  anotherMethods: {
+    type: String,
+    default: 'Another Methods'
   },
   searchQuery: {
     type: String,
@@ -41,106 +47,143 @@ function updateWindowWidth() {
 }
 
 const filteredAndSortedNft = computed(() => {
-  let sortedNft = [...nft];
+  let sortedNft = nft.map(item => ({
+    ...item,
+    price: {
+      ...item.price,
+      originalQuantity: item.price.originalQuantity ?? item.price.quantity
+    },
+    sortInfo: {
+      ...item.sortInfo,
+      originalActivity: item.sortInfo.originalActivity ?? item.sortInfo.activity,
+      originalPopular: item.sortInfo.originalPopular ?? item.sortInfo.popular
+    }
+  }));
+
   switch (props.sort) {
     case 'Recently added':
-      sortedNft.sort((a, b) => b.sortInfo.recentlyAdded - a.sortInfo.recentlyAdded)
+      sortedNft.sort((a, b) => b.sortInfo.recentlyAdded - a.sortInfo.recentlyAdded);
       break;
     case 'Popular':
-      sortedNft.sort((a, b) => b.sortInfo.popular - a.sortInfo.popular)
+      sortedNft.sort((a, b) => b.sortInfo.popular - a.sortInfo.popular);
       break;
     case 'The best':
-      sortedNft.sort((a, b) => b.sortInfo.best - a.sortInfo.best)
-      break;
-    default:
+      sortedNft.sort((a, b) => b.sortInfo.best - a.sortInfo.best);
       break;
   }
-
 
   switch (props.reduce) {
     case 'RedAddTitle':
       sortedNft.reduce((acc, curr) => {
-        console.log(curr);
-
-        switch (true) {
-          case curr.description.title.includes('Digital') && !curr.description.title.includes('Popular'):
-            curr.description.title += ' Popular';
-            break;
-
-          case curr.description.title.includes('Paradise') && !curr.description.title.includes('Badly'):
-            curr.description.title += ' Badly';
-            break;
-
-          default:
-            if (!curr.description.title.match(/\b(Popular|Badly|Initial)\b/)) {
-              curr.description.title += ' Initial';
-            }
-            break;
+        if (curr.description.title.includes('Digital') && !curr.description.title.includes('Popular')) {
+          curr.description.title += ' Popular';
+        } else if (curr.description.title.includes('Paradise') && !curr.description.title.includes('Badly')) {
+          curr.description.title += ' Badly';
+        } else if (!curr.description.title.match(/\b(Popular|Badly|Initial)\b/)) {
+          curr.description.title += ' Initial';
         }
         return acc;
       }, []);
       break;
-
     case 'RedAddPop':
-      sortedNft.reduce((acc, curr) => {
-       const title = curr.description.title.split(' ').pop().join(' ');
-        console.log(title);
-        return title;
-      }, []);
-      break;
-
-    default:
+      sortedNft = sortedNft.map(curr => {
+        curr.description.title = curr.description.title.split(' ').slice(0, -1).join(' ');
+        return curr;
+      });
       break;
   }
 
+  switch (props.map) {
+    case 'MapChangeCost':
+      sortedNft = sortedNft.map(curr => {
+        let num = parseFloat(curr.price.quantity);
+        if (num <= 2) curr.price.quantity = num + 8;
+        return curr;
+      });
+      break;
+    case 'MapChangePopul':
+      sortedNft = sortedNft.map(curr => {
+        if (curr.sortInfo.popular <= 5) {
+          curr.sortInfo.activity -= 26;
+          curr.price.quantity += ' Bad result';
+        }
+        return curr;
+      });
+      break;
+    case 'Default':
+      sortedNft = sortedNft.map(curr => {
+        curr.price.quantity = parseFloat(curr.price.originalQuantity) || 0;
+        curr.sortInfo.activity = curr.sortInfo.originalActivity || 0;
+        curr.sortInfo.popular = curr.sortInfo.originalPopular || 0;
 
+        if (typeof curr.price.quantity === 'string') {
+          curr.price.quantity = curr.price.quantity.replace(' Bad result', '');
+        }
+        return curr;
+      });
+      break;
+  }
 
   switch (props.filter) {
     case 'Auctions':
-      sortedNft = sortedNft.filter((item) => item.type === 'auction')
+      sortedNft = sortedNft.filter(item => item.type === 'auction');
       break;
     case 'Default':
-      sortedNft = sortedNft.filter((item) => item.type === 'default')
+      sortedNft = sortedNft.filter(item => item.type === 'default');
       break;
+  }
+
+  switch (props.anotherMethods) {
+    case 'Pop':
+      sortedNft.pop();
+      break;
+
+    case 'Includes':
+      sortedNft = sortedNft.filter((item) =>
+        console.log(item.description.title.includes('Digital'))
+      );
+      break;
+
+    case 'Reverse':
+      console.log(sortedNft);
+      sortedNft.reverse();
+      console.log(sortedNft);
+      break;
+
+    case 'Another methods':
+
+      sortedNft = nft.map(item => {
+        console.log('original', item);
+        return { ...item };
+      });
+      break;
+
     default:
       break;
   }
 
   if (props.searchQuery) {
-    sortedNft = sortedNft.filter((item) =>
+    sortedNft = sortedNft.filter(item =>
       item.description.title.toLowerCase().includes(props.searchQuery.toLowerCase())
-    )
+    );
   }
 
-  let limit = 12;
-
-  if (windowWidth.value < 1024 && windowWidth.value > 768) {
-    limit = 8;
-  } else if (windowWidth.value < 768) {
-    limit = 6;
-  }
-
-  if(props.pop) {
-    sortedNft.pop();
-    console.log(sortedNft);
-  }
+  let limit = windowWidth.value < 768 ? 6 : windowWidth.value < 1024 ? 8 : 12;
 
   return sortedNft.slice(0, limit);
-
-})
+});
 
 onMounted(() => {
   window.addEventListener('resize', updateWindowWidth);
 });
 
 function getUserById(userId) {
-  return users.find((user) => user.id === userId) || {};
+  return users.find(user => user.id === userId) || {};
 }
 
 function goToArtwork(nftId) {
   router.push({ path: '/artwork', query: { id: nftId } });
 }
-
 </script>
 
 <template>
