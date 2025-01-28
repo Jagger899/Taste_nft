@@ -18,12 +18,13 @@ const nftId = Number(route.query.id) || 0;
 
 const currentNft = ref(nft.find(item => item.id === nftId) || nft[0]);
 
-const currentUser = ref(users.find(user => user.id === nftId) || users[Math.floor(Math.random() * users.length)]);
+const currentUser = ref(users.find(user => user.id === currentNft.value.user) || users[0]);
 
 watch(() => route.query.id, (newId) => {
   const id = Number(newId) || 0;
-  currentNft.value = nft.find(item => item.id === id) || nft[0];
-  currentUser.value = users.find(user => user.id === id) || users[Math.floor(Math.random() * users.length)];
+  const finallYNft = nft.find(item => item.id === id) || nft[0];
+  currentNft.value = finallYNft;
+  currentUser.value = users.find(user => user.id === finallYNft.user) || users[0];
 });
 
 </script>
@@ -35,15 +36,16 @@ watch(() => route.query.id, (newId) => {
     <div class="container">
 
       <div class="artwork__top">
+        <div class="artwork__top-photo">
+          <BasePicture
+            :srcset="currentNft.photo.webp"
+            :src="currentNft.photo.src"
+            :width="currentNft.photo.width"
+            :height="currentNft.photo.height"
+            :alt="currentNft.photo.alt"
+          />
+        </div>
 
-        <BasePicture
-          :srcset="currentNft.photo.webp"
-          :src="currentNft.photo.src"
-          :width="currentNft.photo.width"
-          :height="currentNft.photo.height"
-          :alt="currentNft.photo.alt"
-
-        />
 
         <div class="artwork__top-activity activity">
 
@@ -89,7 +91,7 @@ watch(() => route.query.id, (newId) => {
 
   <UIPlaceBidModal/>
 
-  <UsersActivityInfo :user="currentUser"/>
+  <UsersActivityInfo :user="currentUser" :nft="currentNft"/>
 
   <CardsNft/>
 </template>
@@ -99,10 +101,6 @@ watch(() => route.query.id, (newId) => {
 
 .artwork {
   margin-top: 96px;
-
-  img {
-    height: 72px;
-  }
 
   @include media-breakpoint-down(xs) {
     padding-top: unset;

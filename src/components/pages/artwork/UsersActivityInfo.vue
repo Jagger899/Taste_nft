@@ -1,10 +1,10 @@
 <script setup>
-
 import { socialIcons } from '@/components/composable/copyLink.js'
 import BaseSvg from '@/components/base/BaseSvg.vue'
 import BasePicture from '@/components/base/BasePicture.vue'
 import UIButton from '@/components/UI/UIButton.vue'
 import { users } from '@/data/users.js'
+import {nft} from '@/data/nft.js'
 import { ref, watch } from 'vue'
 
 const props = defineProps({
@@ -12,100 +12,88 @@ const props = defineProps({
     type: Number,
     required: false
   }
-});
+})
 
 const currentUser = ref(users[0]);
+const currentNft = ref(nft[0]);
 
 const updateUser = (id) => {
-  const foundUser = users.find(user => user.id === id);
+  const foundUser = users.find((user) => user.id === id);
   if (foundUser) {
     currentUser.value = foundUser;
   } else {
     const randomIndex = Math.floor(Math.random() * users.length);
     currentUser.value = users[randomIndex];
   }
+}
+
+const updateNft = (id) => {
+  const foundNft = nft.find((item) => item.id === id);
+  currentNft.value = foundNft || nft[0];
 };
 
-watch(() => props.nftId, (newId) => {
-  updateUser(newId);
-}, { immediate: true});
+watch(
+  () => props.nftId,
+  (newId) => {
+    updateUser(newId);
+    updateNft(newId);
+  },
+  { immediate: true }
+)
+console.log(currentUser.value.name)
+console.log(currentNft.value.description.title)
 
 </script>
 
 <template>
   <section class="users">
-
     <div class="container">
-
       <div class="info__inner">
-
         <div v-if="currentUser" class="promo__info info">
-
           <div class="info__user">
-
-            <BasePicture
-              :srcset="currentUser.photo.webp"
-              :width="currentUser.photo.width"
-              :height="currentUser.photo.height"
-              :src="currentUser.photo.src"
-              alt="logo"
-            />
+            <div class="info__user-photo">
+              <BasePicture
+                :srcset="currentUser.photo.webp"
+                :width="currentUser.photo.width"
+                :height="currentUser.photo.height"
+                :src="currentUser.photo.src"
+                alt="logo"
+              />
+            </div>
 
             <div class="info__user-info">
-
               <p class="info__user-name">{{ currentUser.name }}</p>
 
               <p class="info__user-nick">{{ currentUser.nickname }}</p>
-
             </div>
-
           </div>
 
-          <h1 class="info__title">WFH - art name</h1>
+          <h1 class="info__title">
+            {{currentNft.description.title}}</h1>
 
+          <p class="info__copy">
+            <span class="info__copy-title">Copy:</span>
+            {{currentNft.description.count}}
+          </p>
           <p class="info__description">
-            {{ currentUser.description }}
+            <span class="info__description-title">Description: </span>
+            {{ currentNft.description.text}}
           </p>
 
           <div class="info__results">
-
-            <div class="info__sold">
-
-              <p class="info__sold-text">Sold for:</p>
-
-              <div class="info__sold-number">
-
-                <BaseSvg id="tongue" class="info__sold-number-svg"/>
-
-                <p class="info__sold-number-value">{{ currentUser.sales.quantity }}M</p>
-
-              </div>
-
-            </div>
-
             <div class="info__socials">
 
-              <div class="info__button">
-
-                <UIButton>View</UIButton>
-
-              </div>
-
               <BaseSvg
-                v-for="(icon) in socialIcons"
+                v-for="icon in socialIcons"
                 :key="icon"
                 :id="icon.id"
                 class="info__socials-svg"
                 @click="icon.action(icon.route)"
               />
-
             </div>
-
           </div>
-
         </div>
       </div>
-
     </div>
   </section>
 </template>
@@ -145,13 +133,26 @@ watch(() => props.nftId, (newId) => {
     &__user {
       display: flex;
       gap: 12px;
+      margin-bottom: 20px;
     }
 
-    img {
-      border-radius: 12px;
+    &__copy {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 129%;
+      color: $whiteColor;
+    }
+
+    &__copy-title {
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 12px;
+    }
+
+    &__user-photo {
       width: 49px;
       height: 49px;
-      box-shadow: 0 0 15px 0 rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 15px #ffffff26;
+      border-radius: 12px;
     }
 
     &__user-info {
@@ -192,6 +193,10 @@ watch(() => props.nftId, (newId) => {
       text-overflow: ellipsis;
       max-height: 72px;
       margin-bottom: 16px;
+    }
+
+    &__description-title {
+      color: rgba(255, 255, 255, 0.5);
     }
 
     &__button {

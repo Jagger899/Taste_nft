@@ -153,7 +153,8 @@ const filteredAndSortedNft = computed(() => {
     case 'Another methods':
 
       sortedNft = nft.map(item => {
-        console.log('original', item);
+        console.log('original' +
+          '', item);
         return { ...item };
       });
       break;
@@ -233,8 +234,6 @@ function goToArtwork(nftId) {
             <h2 class="card__title">
 
               {{ nftInfo.description.title }}
-
-
 
             </h2>
 
