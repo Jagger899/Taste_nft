@@ -44,12 +44,10 @@ watch(
 console.log(currentUser.value.name)
 console.log(currentNft.value.description.title)
 
-// Отсортированные ставки по убыванию цены
 const sortedBids = computed(() => {
   return [...bids].sort((a, b) => b.price - a.price);
 });
 
-// Функция для получения информации о пользователе по его ID
 const getUserById = (userId) => {
   return users.find(user => user.id === userId) || null;
 };
