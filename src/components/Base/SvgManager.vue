@@ -173,6 +173,27 @@
         </linearGradient>
       </defs>
     </symbol>
+
+    <symbol id="open" viewBox="0 0 92 92" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g filter="url(#filter0_d_53_1156)">
+        <rect x="30" y="15" width="32" height="32" rx="12" fill="url(#paint0_linear_53_1156)"/>
+      </g>
+      <defs>
+        <filter id="filter0_d_53_1156" x="0" y="0" width="92" height="92" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+          <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+          <feOffset dy="15"/>
+          <feGaussianBlur stdDeviation="15"/>
+          <feColorMatrix type="matrix" values="0 0 0 0 0.0784314 0 0 0 0 0.4 0 0 0 0 0.8 0 0 0 0.16 0"/>
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_53_1156"/>
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_53_1156" result="shape"/>
+        </filter>
+        <linearGradient id="paint0_linear_53_1156" x1="62" y1="15" x2="30" y2="15" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#8743FF"/>
+          <stop offset="1" stop-color="#4136F1"/>
+        </linearGradient>
+      </defs>
+    </symbol>
   </svg>
 
 </template>

@@ -5,7 +5,8 @@ import BasePicture from '@/components/base/BasePicture.vue'
 import UIButton from '@/components/UI/UIButton.vue'
 import { users } from '@/data/users.js'
 import {nft} from '@/data/nft.js'
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
+import {bids} from '@/data/bids.js';
 
 const props = defineProps({
   nftId: {
@@ -43,15 +44,31 @@ watch(
 console.log(currentUser.value.name)
 console.log(currentNft.value.description.title)
 
+// Отсортированные ставки по убыванию цены
+const sortedBids = computed(() => {
+  return [...bids].sort((a, b) => b.price - a.price);
+});
+
+// Функция для получения информации о пользователе по его ID
+const getUserById = (userId) => {
+  return users.find(user => user.id === userId) || null;
+};
+
 </script>
 
 <template>
   <section class="users">
+
     <div class="container">
+
       <div class="info__inner">
-        <div v-if="currentUser" class="promo__info info">
+
+        <div v-if="currentUser" class="users__info info">
+
           <div class="info__user">
+
             <div class="info__user-photo">
+
               <BasePicture
                 :srcset="currentUser.photo.webp"
                 :width="currentUser.photo.width"
@@ -59,9 +76,11 @@ console.log(currentNft.value.description.title)
                 :src="currentUser.photo.src"
                 alt="logo"
               />
+
             </div>
 
             <div class="info__user-info">
+
               <p class="info__user-name">{{ currentUser.name }}</p>
 
               <p class="info__user-nick">{{ currentUser.nickname }}</p>
@@ -93,7 +112,52 @@ console.log(currentNft.value.description.title)
             </div>
           </div>
         </div>
+
+        <div class="users__bids">
+
+          <div class="bid" v-for="bid in sortedBids" :key="bid.user">
+
+            <div class="bid__info">
+
+              <div class="info__user-photo">
+
+                <BasePicture
+                  :srcset="getUserById(bid.user).photo.srcset"
+                  :width="getUserById(bid.user).photo.width"
+                  :height="getUserById(bid.user).photo.height"
+                  :src="getUserById(bid.user).photo.src"
+                  :alt="getUserById(bid.user).photo.alt"
+                />
+
+              </div>
+
+              <div class="bid__info-title"><span>Bid placed by </span>{{ bid.code }}</div>
+
+              <div class="bid__info-date">{{ bid.date }}</div>
+
+            </div>
+
+            <div class="bid__sum">
+
+              <BaseSvg id="tongue" class="bid__sum-icon-tongue" />
+
+              <p class="bid__sum__quantity">
+                {{bid.quantity}}
+
+                <span class="bid__sum__quantity-description">({{ bid.price }}$)</span>
+              </p>
+
+              <div class="bid__sum-open-button">
+                <BaseSvg id="open" class="bid__sum-icon-open" />
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
       </div>
+
     </div>
   </section>
 </template>
@@ -130,6 +194,7 @@ console.log(currentNft.value.description.title)
   }
 
   .info {
+
     &__user {
       display: flex;
       gap: 12px;
