@@ -352,6 +352,7 @@ function goToArtwork(nftId) {
   &__img {
     width: 100%;
     height: 317px;
+    display: block;
   }
 
   &__title {
