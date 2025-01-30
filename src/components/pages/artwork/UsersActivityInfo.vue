@@ -7,6 +7,7 @@ import { users } from '@/data/users.js'
 import {nft} from '@/data/nft.js'
 import { ref, watch, computed } from 'vue'
 import {bids} from '@/data/bids.js';
+import { openPageInNewTab, copyPageLink, } from '@/components/composable/copyLink.js'
 
 const props = defineProps({
   nftId: {
@@ -17,6 +18,7 @@ const props = defineProps({
 
 const currentUser = ref(users[0]);
 const currentNft = ref(nft[0]);
+const currentPage = 'usersActivity';
 
 const updateUser = (id) => {
   const foundUser = users.find((user) => user.id === id);
@@ -51,6 +53,19 @@ const sortedBids = computed(() => {
 const getUserById = (userId) => {
   return users.find(user => user.id === userId) || null;
 };
+
+const handleIconClick = (icon) => {
+  switch (icon.route) {
+    case 'dynamic':
+      navigateToPage(currentPage)
+      break
+    case 'copy':
+      copyPageLink(currentPage)
+      break
+    default:
+      openPageInNewTab(icon.route)
+  }
+}
 
 </script>
 
@@ -105,7 +120,7 @@ const getUserById = (userId) => {
                 :key="icon"
                 :id="icon.id"
                 class="info__socials-svg"
-                @click="icon.action(icon.route)"
+                @click="handleIconClick(icon)"
               />
             </div>
           </div>

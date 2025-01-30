@@ -8,34 +8,31 @@ import { toast } from 'vue3-toastify'
 import { nft } from '@/data/nft.js'
 import BasePicture from '@/components/base/BasePicture.vue'
 import BaseSvg from '@/components/base/BaseSvg.vue'
-import {openPageInNewTab, copyPageLink, socialIcons} from '@/components/composable/copyLink.js'
+import { openPageInNewTab, copyPageLink, getTargetRoute, socialIcons } from '@/components/composable/copyLink.js'
 
 const currentUser = ref(users[0]);
+const router = useRouter();
+const currentPage = 'promo';
 
 const updateUser = function (nft) {
   const userId = nft.user;
   currentUser.value = users.find((user) => user.id === userId);
 }
 
-const router = useRouter();
 
-// const navigateToArtwork = function() {
-//   const artworkLink = `${import.meta.env.BASE_URL}/#/artwork`;
-//   window.open(artworkLink, '_blank');
-// }
 
-// const copyArtworkLink = function() {
-//   const artworkLink = `${import.meta.env.BASE_URL}/#/artwork`;
-//   navigator.clipboard
-//     .writeText(artworkLink)
-//     .then(() => {
-//       toast.success('Ссылка скопирована!')
-//     })
-//     .catch(() => {
-//       toast.error('Не удалось скопировать ссылку.')
-//     })
-// }
-
+const handleIconClick = (icon) => {
+  switch (icon.route) {
+    case 'dynamic':
+      router.push(getTargetRoute(currentPage));
+      break;
+    case 'copy':
+      copyPageLink(currentPage);
+      break;
+    default:
+      openPageInNewTab(icon.route)
+  }
+}
 </script>
 
 <template>
@@ -102,7 +99,7 @@ const router = useRouter();
                 :key="icon"
                 :id="icon.id"
                 class="info__socials-svg"
-                @click="icon.action(icon.route)"
+                @click="handleIconClick(icon)"
               />
 
             </div>

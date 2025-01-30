@@ -1,33 +1,40 @@
+import { useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
 
-export const openPageInNewTab = function (routePath) {
-  const baseUrl = import.meta.env.BASE_URL;
-  const fullUrl = `${window.location.origin}${baseUrl}#${routePath}`;
-  window.open(fullUrl, '_blank');
-};
+export function openPageInNewTab(url) {
+  window.open(url, '_blank')
+}
 
-export const copyPageLink = function (routePath) {
-  const baseUrl = import.meta.env.BASE_URL;
-  const fullUrl = `${window.location.origin}${baseUrl}#${routePath}`;
-  navigator.clipboard
-    .writeText(fullUrl)
-    .then(() => {
-      toast.success(`Ссылка на ${routePath} скопирована!`);
+const routeMap = {
+  promo: '/artwork',
+  usersActivity: '/creator',
+}
+
+export function copyPageLink(currentPage) {
+  const currentUrl = window.location.origin + routeMap[currentPage] || window.location.href
+  navigator.clipboard.writeText(currentUrl).then(() => {
+    toast.success('Ссылка скопирована!', {
+      position: 'top-right',
+      autoClose: 2000
     })
-    .catch(() => {
-      toast.error(`Не удалось скопировать ссылку на ${routePath}.`);
-    });
-};
+  })
+}
+
+
+
+export function getTargetRoute(currentPage) {
+  return routeMap[currentPage] || '/'
+}
 
 export const socialIcons = [
   {
     id: 'external',
-    route: '/artwork',
+    route: 'dynamic',
     action: openPageInNewTab,
   },
   {
     id: 'share',
-    route: '/artwork',
+    route: 'copy',
     action: copyPageLink,
   },
   {
