@@ -59,7 +59,7 @@ const getUserById = (userId) => {
 
     <div class="container">
 
-      <div class="info__inner">
+      <div class="users__inner">
 
         <div v-if="currentUser" class="users__info info">
 
@@ -113,42 +113,53 @@ const getUserById = (userId) => {
 
         <div class="users__bids">
 
-          <div class="bid" v-for="bid in sortedBids" :key="bid.user">
+          <h2 class="users__bids-title">Activity</h2>
 
-            <div class="bid__info">
+          <div class="users__bids-box">
+            <div class="bid" v-for="bid in sortedBids" :key="bid.user">
 
-              <div class="info__user-photo">
+              <div class="bid__info">
 
-                <BasePicture
-                  :srcset="getUserById(bid.user).photo.srcset"
-                  :width="getUserById(bid.user).photo.width"
-                  :height="getUserById(bid.user).photo.height"
-                  :src="getUserById(bid.user).photo.src"
-                  :alt="getUserById(bid.user).photo.alt"
-                />
+                <div class="bid__user-photo">
+
+                  <BasePicture
+                    :srcset="getUserById(bid.user).photo.srcset"
+                    :width="getUserById(bid.user).photo.width"
+                    :height="getUserById(bid.user).photo.height"
+                    :src="getUserById(bid.user).photo.src"
+                    :alt="getUserById(bid.user).photo.alt"
+                    class="bid__user-photo-pict"
+                  />
+
+                </div>
+
+                <div class="bid__info-title-box">
+
+                  <div class="bid__info-title"><span>Bid placed by </span>{{ bid.code }}</div>
+
+                  <div class="bid__info-date">{{ bid.date }}</div>
+
+                </div>
+
+
 
               </div>
 
-              <div class="bid__info-title"><span>Bid placed by </span>{{ bid.code }}</div>
+              <div class="bid__sum">
 
-              <div class="bid__info-date">{{ bid.date }}</div>
+                <BaseSvg id="tongue" class="bid__sum-icon-tongue" />
 
-            </div>
+                <p class="bid__sum__quantity">
+                  {{bid.quantity}}
 
-            <div class="bid__sum">
+                  <span class="bid__sum__quantity-description">({{ bid.price }}$)</span>
+                </p>
 
-              <BaseSvg id="tongue" class="bid__sum-icon-tongue" />
+                <div class="bid__sum-open-button">
+                  <BaseSvg id="open" class="bid__sum-icon-open" />
+                </div>
 
-              <p class="bid__sum__quantity">
-                {{bid.quantity}}
-
-                <span class="bid__sum__quantity-description">({{ bid.price }}$)</span>
-              </p>
-
-              <div class="bid__sum-open-button">
-                <BaseSvg id="open" class="bid__sum-icon-open" />
               </div>
-
             </div>
           </div>
 
@@ -168,15 +179,38 @@ const getUserById = (userId) => {
   margin-bottom: 80px;
   overflow: hidden;
 
+  @include media-breakpoint-down(sm) {
+    margin-top: 0;
+  }
+
   &__inner {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 16px;
     @include media-breakpoint-down(md) {
       flex-direction: column;
       align-items: center;
     }
+  }
+
+  &__bids-box {
+    overflow: auto;
+    height: 90%;
+  }
+
+  &__bids{
+    flex: 1 1 60%;
+    overflow: hidden;
+    width: 100%;
+    height: 492px;
+  }
+
+  &__bids-title {
+    font-weight: 700;
+    font-size: 18px;
+    color: $whiteColor;
+    margin-bottom: 16px;
   }
 
   &__info {
@@ -188,7 +222,12 @@ const getUserById = (userId) => {
 
     @include media-breakpoint-down(md) {
       margin: 0 auto;
+      width: unset;
     }
+
+    //@include media-breakpoint-down(sm) {
+    //  width: 350px;
+    //}
   }
 
   .info {
@@ -197,6 +236,10 @@ const getUserById = (userId) => {
       display: flex;
       gap: 12px;
       margin-bottom: 20px;
+
+      @include media-breakpoint-down(sm) {
+        margin-bottom: 0;
+      }
     }
 
     &__copy {
@@ -216,6 +259,12 @@ const getUserById = (userId) => {
       height: 49px;
       box-shadow: 0 0 15px #ffffff26;
       border-radius: 12px;
+
+      img {
+        width: 49px;
+        height: 100%;
+        border-radius: 12px;
+      }
     }
 
     &__user-info {
@@ -242,6 +291,10 @@ const getUserById = (userId) => {
       font-weight: 700;
       font-size: 32px;
       color: $whiteColor;
+
+      @include media-breakpoint-down(sm) {
+        font-size: 24px;
+      }
     }
 
     &__description {
@@ -320,6 +373,119 @@ const getUserById = (userId) => {
       width: 400px;
       height: 400px;
     }
+  }
+
+  .bid{
+    border: 1px solid #30363d;
+    min-height: 67px;
+    margin: 0 8px 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+
+    &__info {
+      display: flex;
+      align-items: center;
+      gap:10px;
+    }
+
+    &__user-photo{
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 15px 0 rgba(255, 255, 255, 0.15);
+      position: relative;
+      width: 32px;
+      height: 32px;
+
+      @include media-breakpoint-down(xs) {
+        margin: 0 7px 0 10px;
+      }
+
+      img {
+        width: 32px;
+        height: 32px;
+        object-fit: cover;
+        display: block;
+      }
+
+    }
+
+    &__sum-icon-open{
+      width: 20px;
+      height: 20px;
+    }
+
+    &__sum-icon-tongue {
+      width: 19px;
+      height: 19px;
+      margin-right: 6px;
+    }
+
+    &__sum-open-button {
+      box-shadow: 0 15px 30px 0 rgba(20, 102, 204, 0.16);
+      background: linear-gradient(270deg, #8743ff 0%, #4136f1 100%);
+      border-radius: 12px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__info-title {
+      font-weight: 700;
+      font-size: 20px;
+      color: #fff;
+
+      @include media-breakpoint-down(sm) {
+        font-size: 16px;
+      }
+
+      @include media-breakpoint-down(xs) {
+        span {
+          display: none;
+        }
+
+        font-size: 14px;
+      }
+    }
+
+    &__info-date {
+      font-weight: 500;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.5);
+
+      @include media-breakpoint-down(sm) {
+        font-size: 12px;
+      }
+
+      @include media-breakpoint-down(xs) {
+        font-size: 10px;
+      }
+    }
+
+    &__sum {
+      display: flex;
+      align-items: center;
+
+    }
+
+    &__sum__quantity {
+      font-weight: 600;
+      font-size: 16px;
+      color: #fff;
+      margin-right: 16px;
+
+      @include media-breakpoint-down(sm) {
+        font-size: 12px;
+      }
+    }
+
+    &__sum__quantity-description{
+      color: rgba(255, 255, 255, 0.5);
+    }
+
   }
 }
 </style>

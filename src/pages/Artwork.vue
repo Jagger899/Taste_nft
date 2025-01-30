@@ -14,6 +14,8 @@ import { users } from '@/data/users.js';
 
 const route = useRoute();
 const nftId = Number(route.query.id) || 0;
+const showCountDown = ref(true);
+const buttonText = ref('Place a bid');
 
 
 const currentNft = ref(nft.find(item => item.id === nftId) || nft[0]);
@@ -26,6 +28,11 @@ watch(() => route.query.id, (newId) => {
   currentNft.value = finallYNft;
   currentUser.value = users.find(user => user.id === finallYNft.user) || users[0];
 });
+
+const handleBidClick = () => {
+  showCountDown.value = false;
+  buttonText.value = 'Buy art';
+};
 
 </script>
 
@@ -68,18 +75,18 @@ watch(() => route.query.id, (newId) => {
             </div>
 
           </div>
-          <div class="activity__ending">
+          <div class="activity__ending" v-show="showCountDown">
             <p class="activity__title">Auction ending in:</p>
             <CountDown
               class="activity__ending-time"
-              v-if="currentNft?.price?.time"
+              v-if=" currentNft?.price?.time"
               :initialTime="currentNft.price.time * 3600"
             />
             <p v-else class="activity__ending-time">Sold</p>
           </div>
           <div class="activity__button">
 
-            <UIButton modalName="placeBidModal">Place a bid</UIButton>
+            <UIButton @click="handleBidClick" modalName="placeBidModal">{{ buttonText }}</UIButton>
 
           </div>
 
@@ -107,9 +114,31 @@ watch(() => route.query.id, (newId) => {
     height: 400px;
   }
 
+
+
+  &__top-photo {
+    height: 518px;
+
+    img{
+      height: 100%;
+    }
+
+    @include media-breakpoint-down(sm) {
+      height: 400px;
+    }
+
+    @include media-breakpoint-down(xs) {
+      height: 250px;
+    }
+  }
+
   &__top-activity {
     margin: 0 auto;
     transform: translateY(-50%);
+
+    @include media-breakpoint-down(xs) {
+      transform: translateY(-100%);
+    }
   }
 }
 
@@ -123,6 +152,16 @@ watch(() => route.query.id, (newId) => {
   background: #30363d;
   padding: 16px 20px;
 
+  @include media-breakpoint-down(sm) {
+    padding: 10px 10px;
+    width: 400px;
+    flex-wrap: wrap;
+  }
+
+  @include media-breakpoint-down(xs) {
+    width: 90%;
+  }
+
   &__current {
     position: relative;
     &::after {
@@ -134,6 +173,14 @@ watch(() => route.query.id, (newId) => {
       border-radius: 12px;
       right: -20px;
       bottom: 0;
+
+      @include media-breakpoint-down(sm) {
+        right: -10px;
+      }
+
+      @include media-breakpoint-down(xs) {
+        display: none;
+      }
     }
   }
 
@@ -157,12 +204,19 @@ watch(() => route.query.id, (newId) => {
     font-weight: 600;
     font-size: 16px;
     color: $whiteColor;
+
+    @include media-breakpoint-down(sm) {
+      font-size: 12px;
+    }
   }
 
   &__current-number-desc {
     font-weight: 600;
     font-size: 16px;
     color: rgba(255, 255, 255, 0.5);
+    @include media-breakpoint-down(sm) {
+      font-size: 12px;
+    }
   }
 
   &__title {
@@ -183,6 +237,14 @@ watch(() => route.query.id, (newId) => {
       border-radius: 12px;
       right: -20px;
       bottom: 0;
+
+      @include media-breakpoint-down(sm) {
+        right: -10px;
+      }
+
+      @include media-breakpoint-down(sm) {
+        display: none;
+      }
     }
   }
 
@@ -191,11 +253,24 @@ watch(() => route.query.id, (newId) => {
     font-size: 16px;
     color: #fff;
     text-align: center;
+
+    @include media-breakpoint-down(sm) {
+      font-size: 12px;
+    }
   }
 
   &__button {
     width: 138px;
     height: 40px;
+
+    @include media-breakpoint-down(sm) {
+      width: 100px;
+    }
+
+    @include media-breakpoint-down(xs) {
+      align-self: center;
+      margin: 12px auto 0;
+    }
   }
 }
 </style>

@@ -192,6 +192,11 @@ const connectWallet = () => {
     margin-bottom: 12px;
     position: relative;
     overflow: hidden;
+
+    img {
+      width: 22px;
+      height: 22px;
+    }
   }
 
   &__video-play {

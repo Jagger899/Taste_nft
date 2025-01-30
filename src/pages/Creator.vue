@@ -1,15 +1,15 @@
 <script setup>
 
+import TheHeader from '@/components/base/TheHeader.vue'
 </script>
 
 <template>
-  <div>
-    <h1>Creator</h1>
-  </div>
+  <TheHeader/>
 </template>
 
 
 
 <style lang="scss" scoped>
+@import '@/assets/scss/style';
 
 </style>
