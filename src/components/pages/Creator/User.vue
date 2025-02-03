@@ -3,12 +3,29 @@ import {users} from '@/data/users.js';
 import { following } from '@/data/following.js'
 import {followers} from '@/data/followers.js'
 import { ref } from 'vue'
-import { socialIcons } from '@/components/composable/copyLink.js'
 import BasePicture from '@/components/base/BasePicture.vue'
 import BaseSvg from '@/components/base/BaseSvg.vue'
+import UIButton from '@/components/UI/UIButton.vue'
+import { openPageInNewTab, copyPageLink, getTargetRoute, socialIcons } from '@/components/composable/copyLink.js'
+import { useRouter } from 'vue-router'
 
 
 const currentUser = ref(users[0]);
+const currentPage = 'Creator';
+const router = useRouter();
+
+const handleIconClick = (icon) => {
+  switch (icon.route) {
+    case 'dynamic':
+      router.push(getTargetRoute(currentPage));
+      break;
+    case 'copy':
+      copyPageLink(currentPage);
+      break;
+    default:
+      openPageInNewTab(icon.route)
+  }
+}
 </script>
 
 <template>
@@ -40,6 +57,37 @@ const currentUser = ref(users[0]);
           </div>
         </div>
 
+        <div class="info__advant advant">
+          <div class="advant__info">
+            <p class="advant__number">234</p>
+            <p class="advant__descr">Followers</p>
+          </div>
+
+          <div class="advant__info">
+            <p class="advant__number">15</p>
+            <p class="advant__descr">Following</p>
+          </div>
+
+          <div class="advant__button">
+
+            <UIButton>Follow</UIButton>
+
+          </div>
+
+          <div class="info__socials">
+
+            <BaseSvg
+              v-for="(icon) in socialIcons"
+              :key="icon"
+              :id="icon.id"
+              class="info__socials-svg"
+              @click="handleIconClick(icon)"
+            />
+
+          </div>
+
+        </div>
+
         <h1 class="info__title">
           {{currentUser.description}}</h1>
 
@@ -53,16 +101,7 @@ const currentUser = ref(users[0]);
         </p>
 
         <div class="info__results">
-          <div class="info__socials">
 
-            <BaseSvg
-              v-for="icon in socialIcons"
-              :key="icon"
-              :id="icon.id"
-              class="info__socials-svg"
-              @click="icon.action(icon.route)"
-            />
-          </div>
         </div>
       </div>
 
@@ -73,5 +112,48 @@ const currentUser = ref(users[0]);
 </template>
 
 <style scoped lang="scss">
+@import '@/assets/scss/style';
 
+.info {
+  padding: 96px 0 51px;
+  &__user {
+    display: flex;
+    gap: 12px;
+  }
+
+  &__user-photo {
+    border-radius: 12px;
+    width: 49px;
+    height: 49px;
+    box-shadow: 0 0 15px 0 rgba(255, 255, 255, 0.15);
+    position: relative;
+    overflow: hidden;
+
+  }
+
+  &__user-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__user-name {
+    font-weight: 700;
+    font-size: 18px;
+    color: $whiteColor;
+  }
+
+  &__user-nick {
+    font-weight: 500;
+    font-size: 14px;
+    background: linear-gradient(270deg, #8743ff 0%, #d8c2ff 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &__socials-svg {
+    width: 40px;
+    height: 40px;
+  }
+}
 </style>

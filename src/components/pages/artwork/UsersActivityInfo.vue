@@ -1,13 +1,13 @@
 <script setup>
-import { socialIcons } from '@/components/composable/copyLink.js'
+import { getTargetRoute, socialIcons } from '@/components/composable/copyLink.js'
 import BaseSvg from '@/components/base/BaseSvg.vue'
 import BasePicture from '@/components/base/BasePicture.vue'
-import UIButton from '@/components/UI/UIButton.vue'
 import { users } from '@/data/users.js'
 import {nft} from '@/data/nft.js'
 import { ref, watch, computed } from 'vue'
 import {bids} from '@/data/bids.js';
 import { openPageInNewTab, copyPageLink, } from '@/components/composable/copyLink.js'
+import { useRouter } from 'vue-router'
 
 const props = defineProps({
   nftId: {
@@ -19,6 +19,7 @@ const props = defineProps({
 const currentUser = ref(users[0]);
 const currentNft = ref(nft[0]);
 const currentPage = 'usersActivity';
+const router = useRouter();
 
 const updateUser = (id) => {
   const foundUser = users.find((user) => user.id === id);
@@ -43,8 +44,6 @@ watch(
   },
   { immediate: true }
 )
-console.log(currentUser.value.name)
-console.log(currentNft.value.description.title)
 
 const sortedBids = computed(() => {
   return [...bids].sort((a, b) => b.price - a.price);
@@ -57,7 +56,7 @@ const getUserById = (userId) => {
 const handleIconClick = (icon) => {
   switch (icon.route) {
     case 'dynamic':
-      navigateToPage(currentPage)
+      router.push(getTargetRoute(currentPage));
       break
     case 'copy':
       copyPageLink(currentPage)
@@ -156,8 +155,6 @@ const handleIconClick = (icon) => {
 
                 </div>
 
-
-
               </div>
 
               <div class="bid__sum">
@@ -203,6 +200,7 @@ const handleIconClick = (icon) => {
     align-items: center;
     justify-content: space-between;
     gap: 16px;
+
     @include media-breakpoint-down(md) {
       flex-direction: column;
       align-items: center;
@@ -239,14 +237,9 @@ const handleIconClick = (icon) => {
       margin: 0 auto;
       width: unset;
     }
-
-    //@include media-breakpoint-down(sm) {
-    //  width: 350px;
-    //}
   }
 
   .info {
-
     &__user {
       display: flex;
       gap: 12px;

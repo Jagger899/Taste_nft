@@ -12,7 +12,6 @@ const handleClick = () => {
   }
 };
 
-
 </script>
 
 <template>
@@ -91,3 +90,4 @@ button {
   }
 }
 </style>
+
