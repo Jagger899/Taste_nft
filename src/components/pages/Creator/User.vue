@@ -2,17 +2,30 @@
 import {users} from '@/data/users.js';
 import { following } from '@/data/following.js'
 import {followers} from '@/data/followers.js'
-import { ref } from 'vue'
+import { ref,watch,computed } from 'vue'
 import BasePicture from '@/components/base/BasePicture.vue'
 import BaseSvg from '@/components/base/BaseSvg.vue'
 import UIButton from '@/components/UI/UIButton.vue'
 import { openPageInNewTab, copyPageLink, getTargetRoute, socialIcons } from '@/components/composable/copyLink.js'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
-
-const currentUser = ref(users[0]);
+// const currentUser = ref(users[0]);
+const currentFollower = ref(followers[0]);
 const currentPage = 'Creator';
 const router = useRouter();
+const route = useRoute();
+const userId = computed(() => Number(route.query.userId));
+const currentUser = computed(() => users.find(user => user.id === userId.value) || users[0])
+const updateUser = (userId) => {
+  const foundUser = users.find(user => user.id === Number(userId))
+  currentUser.value = foundUser || users[0]
+}
+
+watch(() => route.query.userId, (newUserId) => {
+  if (newUserId){
+    updateUser(newUserId);
+  }
+}, { immediate: true });
 
 const handleIconClick = (icon) => {
   switch (icon.route) {
@@ -33,7 +46,7 @@ const handleIconClick = (icon) => {
 
     <div class="container">
 
-      <div v-if="currentUser" class="users__info info">
+      <div v-if="currentFollower" class="users__info info">
 
         <div class="info__top-box">
           <div class="info__user">
@@ -52,21 +65,25 @@ const handleIconClick = (icon) => {
 
             <div class="info__user-info">
 
-              <p class="info__user-name">{{ currentUser.name }}</p>
+              <p class="info__user-name">{{ currentFollower.name }}</p>
 
-              <p class="info__user-nick">{{ currentUser.nickname }}</p>
+              <p class="info__user-nick">{{ currentFollower.nickname }}</p>
             </div>
           </div>
 
           <div class="info__advant advant">
-            <div class="advant__info">
-              <p class="advant__number">234</p>
-              <p class="advant__descr">Followers</p>
-            </div>
+            <div class="advant__info-box">
 
-            <div class="advant__info">
-              <p class="advant__number">15</p>
-              <p class="advant__descr">Following</p>
+              <div class="advant__info">
+                <p class="advant__number">{{currentFollower.sales.quantity}}</p>
+                <p class="advant__descr">Followers</p>
+              </div>
+
+              <div class="advant__info">
+                <p class="advant__number">{{currentFollower.sales.sum}}</p>
+                <p class="advant__descr">Following</p>
+              </div>
+
             </div>
 
             <div class="advant__button">
@@ -90,25 +107,32 @@ const handleIconClick = (icon) => {
           </div>
         </div>
 
-        <div class="socials">
-          <div class="social">
-            <BaseSvg
-              v-for="(icon) in socialIcons"
-              :key="icon"
-              :id="icon.id"
-              class="social__svg"
-              @click="handleIconClick(icon)"
-            />
-          </div>
-        </div>
+        <ul class="socials">
+          <li class="info__social">
+            <BaseSvg id="twitch" class="info__social-svg"/>
 
-        <h1 class="info__title">
-          {{currentUser.description}}</h1>
+            <p class="info__social-text">Twitch</p>
+          </li>
 
-        <p class="info__copy">
-          <span class="info__copy-title">Copy:</span>
-          {{currentUser.description}}
-        </p>
+          <li class="info__social">
+            <BaseSvg id="instagram" class="info__social-svg"/>
+
+            <p class="info__social-text">Instagram</p>
+          </li>
+
+          <li class="info__social">
+            <BaseSvg id="twitter" class="info__social-svg"/>
+
+            <p class="info__social-text">Twitter</p>
+          </li>
+
+          <li class="info__social">
+            <BaseSvg id="onlyfans" class="info__social-svg"/>
+
+            <p class="info__social-text">OnlyFans</p>
+          </li>
+        </ul>
+
         <p class="info__description">
           <span class="info__description-title">Description: </span>
           {{ currentUser.description}}
@@ -131,6 +155,11 @@ const handleIconClick = (icon) => {
 .info {
   padding: 96px 0 51px;
   color: $whiteColor;
+
+  @include media-breakpoint-down(md) {
+    padding-top: 40px;
+  }
+
   &__user {
     display: flex;
     gap: 12px;
@@ -142,11 +171,27 @@ const handleIconClick = (icon) => {
     align-items: center;
   }
 
+  &__social {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__social-svg {
+    width: 20px;
+    height: 20px;
+  }
+
   &__top-box {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
+
+    @include media-breakpoint-down(sm) {
+      flex-direction: column;
+      gap: 20px;
+    }
   }
 
   &__user-photo {
@@ -182,11 +227,24 @@ const handleIconClick = (icon) => {
     width: 40px;
     height: 40px;
   }
+
+  &__description {
+    max-width: 1061px;
+  }
 }
 
 .advant {
   display: flex;
   align-items: center;
+
+  @include media-breakpoint-down(sm) {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__info-box {
+    display: flex;
+  }
 
   &__info {
     display: flex;
@@ -206,6 +264,7 @@ const handleIconClick = (icon) => {
     font-size: 14px;
     line-height: 129%;
     color: rgba(255, 255, 255, 0.5);
+
   }
 
   &__number {
@@ -213,6 +272,19 @@ const handleIconClick = (icon) => {
     font-size: 14px;
     line-height: 129%;
 
+  }
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 16px;
+
+  @include media-breakpoint-down(sm) {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
   }
 }
 </style>

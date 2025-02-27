@@ -53,6 +53,10 @@ const getUserById = (userId) => {
   return users.find(user => user.id === userId) || null;
 };
 
+const goToCreatorPage = (userId) => {
+  router.push({ path: '/creator', query: { userId } })
+}
+
 const handleIconClick = (icon) => {
   switch (icon.route) {
     case 'dynamic':
@@ -167,8 +171,8 @@ const handleIconClick = (icon) => {
                   <span class="bid__sum__quantity-description">({{ bid.price }}$)</span>
                 </p>
 
-                <div class="bid__sum-open-button">
-                  <BaseSvg id="open" class="bid__sum-icon-open" />
+                <div class="bid__sum-open-button" @click="goToCreatorPage(bid.user)">
+                  <BaseSvg id="open" class="bid__sum-icon-open"   />
                 </div>
 
               </div>

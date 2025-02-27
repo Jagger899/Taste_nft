@@ -38,12 +38,14 @@ const handleBidClick = () => {
 
 <template>
   <TheHeader/>
+
   <section class="artwork">
 
     <div class="container">
 
       <div class="artwork__top">
         <div class="artwork__top-photo">
+
           <BasePicture
             :srcset="currentNft.photo.webp"
             :src="currentNft.photo.src"
@@ -51,6 +53,7 @@ const handleBidClick = () => {
             :height="currentNft.photo.height"
             :alt="currentNft.photo.alt"
           />
+
         </div>
 
 

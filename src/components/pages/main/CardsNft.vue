@@ -39,6 +39,10 @@ const props = defineProps({
   searchQuery: {
     type: String,
     default: ''
+  },
+  selectedType: {
+    type: String,
+    default: 'Created'
   }
 });
 
@@ -163,6 +167,16 @@ const filteredAndSortedNft = computed(() => {
       break;
   }
 
+  switch(props.selectedType) {
+    case 'Collected':
+      sortedNft = sortedNft.filter(item => item.sortInfo.activity >= 20);
+      break;
+    case 'Created':
+      sortedNft = sortedNft.filter(item => item.sortInfo.activity < 20);
+      break;
+    default:break;
+  }
+
   if (props.searchQuery) {
     sortedNft = sortedNft.filter(item =>
       item.description.title.toLowerCase().includes(props.searchQuery.toLowerCase())
@@ -185,6 +199,7 @@ function getUserById(userId) {
 function goToArtwork(nftId) {
   router.push({ path: '/artwork', query: { id: nftId } });
 }
+
 </script>
 
 <template>
@@ -301,9 +316,8 @@ function goToArtwork(nftId) {
   }
 
   @include media-breakpoint-down(xs) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    grid-template-columns: 1fr;
+    justify-items: center;
     margin-bottom: 40px;
   }
 }
