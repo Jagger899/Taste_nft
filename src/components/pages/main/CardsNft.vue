@@ -207,7 +207,7 @@ function goToArtwork(nftId) {
 
     <div class="container">
 
-      <div v-if="filteredAndSortedNft.length === 0">There is no cards</div>
+      <div v-if="!filteredAndSortedNft.length">There is no cards</div>
 
       <div v-else class="cards">
 
@@ -240,7 +240,7 @@ function goToArtwork(nftId) {
             :src="nftInfo.photo.src"
             :width="nftInfo.photo.width"
             :height="nftInfo.photo.height"
-            :lazy="true"
+            lazy
             :alt="nftInfo.photo.alt"
           />
 

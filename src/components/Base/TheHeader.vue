@@ -1,8 +1,9 @@
 <script setup>
 import UIButton from '@/components/UI/UIButton.vue'
-import { ref, watch } from 'vue'
+import { ref, watch,computed } from 'vue'
 import { useModalStore } from '../stores/store'
 import BaseSvg from '@/components/base/BaseSvg.vue'
+import UIProfile from '@/components/UI/UIProfile.vue'
 
 const searchQuery = ref('');
 const emit = defineEmits(['update:searchQuery']);
@@ -22,49 +23,56 @@ function clearSearchQuery() {
   emit('update:searchQuery', searchQuery.value);
   store.closeModal('searchModal');
 }
+
+const buttonText = computed(() => store.isProfileVisible ? 'Artwork' : 'Connect wallet');
 </script>
 
 <template>
   <header class="header">
-
-    <div class="header__logo">
-      <picture>
-        <source srcset="/public/logo.webp" type="image/webp" />
-        <img class="header__img" src="/public/logo.png" alt="logo" />
-      </picture>
-
-    </div>
-
-    <div class="header__search">
-<!--      <svg class="header__search-svg">-->
-<!--        <use xlink:href="#search"></use>-->
-<!--      </svg>-->
-
-      <BaseSvg class="header__search-svg" id="search"/>
-
-      <input
-        class="header__input"
-        type="text"
-        placeholder="Search for ..."
-        v-model="searchQuery"
-        @input="updateSearchQuery"
-      />
-
-      <div v-if="searchQuery" class="header__clear-input" @click="clearSearchQuery">
-
-        <BaseSvg id="clear-input" class="header__clear-input-svg" />
-
-        <p class="header__clear-input-text">Clear</p>
+    <div class="header__inner">
+      <div class="header__logo">
+        <picture>
+          <source srcset="/public/logo.webp" type="image/webp" />
+          <img class="header__img" src="/public/logo.png" alt="logo" />
+        </picture>
 
       </div>
 
+      <div class="header__search">
+        <!--      <svg class="header__search-svg">-->
+        <!--        <use xlink:href="#search"></use>-->
+        <!--      </svg>-->
+
+        <BaseSvg class="header__search-svg" id="search"/>
+
+        <input
+          class="header__input"
+          type="text"
+          placeholder="Search for ..."
+          v-model="searchQuery"
+          @input="updateSearchQuery"
+        />
+
+        <div v-if="searchQuery" class="header__clear-input" @click="clearSearchQuery">
+
+          <BaseSvg id="clear-input" class="header__clear-input-svg" />
+
+          <p class="header__clear-input-text">Clear</p>
+
+        </div>
+
+      </div>
+
+      <div class="header__btn">
+
+        <UIButton modalName="walletModal">{{ buttonText }}</UIButton>
+
+      </div>
     </div>
 
-    <div class="header__btn">
 
-      <UIButton modalName="walletModal">Connect wallet</UIButton>
 
-    </div>
+    <UIProfile v-if="store.isProfileVisible" />
 
   </header>
 
@@ -83,6 +91,12 @@ function clearSearchQuery() {
   padding: 0 24px;
   border-radius: 0px 0px 32px 32px;
   z-index: 10;
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   &__logo {
     margin-left: 5px;

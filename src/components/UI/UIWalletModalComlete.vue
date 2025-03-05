@@ -7,8 +7,16 @@ const store = useModalStore();
 
 const close = () => {
   store.closeModal('walletCompleteModal');
-  console.log('Closing modal...');
 };
+
+onMounted(() => {
+  setTimeout(() => {
+    store.closeModal('walletCompleteModal');
+    setTimeout(() => {
+      store.isProfileVisible = true;
+    }, 500);
+  }, 3000);
+})
 
 </script>
 

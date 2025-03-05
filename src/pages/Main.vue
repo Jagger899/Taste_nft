@@ -11,7 +11,6 @@ const reduce = ref('RedAddTitle');
 const pop = ref(null);
 const map = ref('Default');
 const anotherMethods = ref('AnotherMethods');
-const windowWidth = ref(window.innerWidth);
 </script>
 
 <template>

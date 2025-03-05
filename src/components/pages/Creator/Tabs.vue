@@ -1,13 +1,13 @@
 <script setup>
 import { ref, defineEmits } from 'vue';
 import {nft} from '@/data/nft.js';
+
 const activeTab = ref('Created');
 const emit = defineEmits(['update:type']);
 const changeTab = (tab) => {
   activeTab.value = tab;
   emit('update:type', tab);
 };
-
 
 </script>
 
