@@ -1,6 +1,6 @@
 <script setup>
 import UIButton from '@/components/UI/UIButton.vue'
-import { ref, watch,computed,onMounted, onUnmounted } from 'vue'
+import { ref,computed,onMounted, onUnmounted } from 'vue'
 import { useModalStore } from '../stores/store'
 import BaseSvg from '@/components/base/BaseSvg.vue'
 import UIProfile from '@/components/UI/UIProfile.vue'
@@ -35,9 +35,10 @@ function clearSearchQuery() {
   store.closeModal('searchModal');
 }
 
-const buttonText = computed(() => store.isProfileVisible ? 'Artwork' : 'Connect wallet');
+const buttonText = computed(() => isLoggedIn.value ? 'Artwork' : 'Connect wallet');
 
-function toggleProfileMenu() {
+function toggleProfileMenu(event) {
+  event.stopPropagation();
   showProfileMenu.value = !showProfileMenu.value;
 }
 
@@ -45,6 +46,11 @@ function handleClickOutside(event) {
   if (!event.target.closest('.profile-box')) {
     showProfileMenu.value = false;
   }
+}
+
+function logout() {
+  isLoggedIn.value = false;
+  showProfileMenu.value = false;
 }
 
 onMounted(() => {
@@ -100,7 +106,7 @@ onUnmounted(() => {
       </div>
     </div>
 
-    <div class="profile-box" v-if="store.isProfileVisible">
+    <div class="profile-box" v-if="store.isProfileVisible && isLoggedIn">
       <UIProfile @click="toggleProfileMenu" />
 
       <ul v-if="showProfileMenu" class="profile__list">
@@ -109,7 +115,7 @@ onUnmounted(() => {
         </li>
         <li @click="goToCreator">My profile</li>
         <li>Balance settings</li>
-        <li @click="$emit('exit')" class="profile__list-out">Log out</li>
+        <li @click="logout" class="profile__list-out">Log out</li>
       </ul>
     </div>
 
@@ -129,7 +135,7 @@ onUnmounted(() => {
   justify-content: space-between;
   align-items: center;
   padding: 0 24px;
-  border-radius: 0px 0px 32px 32px;
+  border-radius: 0 0 32px 32px;
   z-index: 10;
 
   &__inner {
