@@ -12,11 +12,9 @@ const close = () => {
 onMounted(() => {
   setTimeout(() => {
     store.closeModal('walletCompleteModal');
-    setTimeout(() => {
-      store.isProfileVisible = true;
-    }, 500);
+    store.showProfileAfterDelay();
   }, 3000);
-})
+});
 
 </script>
 

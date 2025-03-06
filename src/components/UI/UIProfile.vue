@@ -38,11 +38,11 @@ defineProps(['active', 'adaptive'])
   position: relative;
   user-select: none;
   padding: 5px;
-  width: 100%;
   display: flex;
   align-items: center;
   cursor: pointer;
   background: #30363d;
+
 
   &__photo {
     flex-shrink: 0;
@@ -134,11 +134,11 @@ defineProps(['active', 'adaptive'])
       transform: rotate(90deg);
     }
   }
+
   &_adaptive {
     @include media-breakpoint-down(sm) {
       padding: 0;
     }
-
     .button {
       &__main {
         @include media-breakpoint-down(sm) {

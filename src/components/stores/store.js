@@ -8,7 +8,6 @@ export const useModalStore = defineStore('modal', () => {
     videoModal: false,
     searchModal: false,
     placeBidModal: false,
-
   })
 
   const activeVideoUrl = reactive({
@@ -30,11 +29,18 @@ export const useModalStore = defineStore('modal', () => {
     }
   }
 
+  const showProfileAfterDelay = () => {
+    setTimeout(() => {
+      isProfileVisible.value = true;
+    }, 500);
+  }
+
   return {
     modals,
     activeVideoUrl,
     openModal,
     closeModal,
-    isProfileVisible
+    isProfileVisible,
+    showProfileAfterDelay
   }
 })

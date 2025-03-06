@@ -1,13 +1,24 @@
 <script setup>
 import UIButton from '@/components/UI/UIButton.vue'
-import { ref, watch,computed } from 'vue'
+import { ref, watch,computed,onMounted, onUnmounted } from 'vue'
 import { useModalStore } from '../stores/store'
 import BaseSvg from '@/components/base/BaseSvg.vue'
 import UIProfile from '@/components/UI/UIProfile.vue'
+import { user } from '@/data/profile.js'
+import { useRouter } from 'vue-router'
 
 const searchQuery = ref('');
 const emit = defineEmits(['update:searchQuery']);
 const store = useModalStore();
+const router = useRouter();
+
+const showProfileMenu = ref(false);
+const isLoggedIn = ref(true);
+
+function goToCreator() {
+  showProfileMenu.value = false;
+  router.push('/creator')
+}
 
 function updateSearchQuery(event) {
   searchQuery.value = event.target.value;
@@ -25,6 +36,25 @@ function clearSearchQuery() {
 }
 
 const buttonText = computed(() => store.isProfileVisible ? 'Artwork' : 'Connect wallet');
+
+function toggleProfileMenu() {
+  showProfileMenu.value = !showProfileMenu.value;
+}
+
+function handleClickOutside(event) {
+  if (!event.target.closest('.profile-box')) {
+    showProfileMenu.value = false;
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside);
+});
+
 </script>
 
 <template>
@@ -70,15 +100,25 @@ const buttonText = computed(() => store.isProfileVisible ? 'Artwork' : 'Connect 
       </div>
     </div>
 
+    <div class="profile-box" v-if="store.isProfileVisible">
+      <UIProfile @click="toggleProfileMenu" />
 
-
-    <UIProfile v-if="store.isProfileVisible" />
+      <ul v-if="showProfileMenu" class="profile__list">
+        <li class="profile__list-address">
+          Address: <span>{{ user.address }}</span>
+        </li>
+        <li @click="goToCreator">My profile</li>
+        <li>Balance settings</li>
+        <li @click="$emit('exit')" class="profile__list-out">Log out</li>
+      </ul>
+    </div>
 
   </header>
 
 </template>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/style";
 .header {
   position: fixed;
   top: 0;
@@ -94,6 +134,7 @@ const buttonText = computed(() => store.isProfileVisible ? 'Artwork' : 'Connect 
 
   &__inner {
     display: flex;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
   }
@@ -166,4 +207,49 @@ const buttonText = computed(() => store.isProfileVisible ? 'Artwork' : 'Connect 
     color: rgba(255, 255, 255, 0.5);
   }
 }
+
+.profile {
+  &__list {
+    position: absolute;
+    top: 0;
+    width: 279px;
+    height: 172px;
+    z-index: -1;
+    border-radius: 12px;
+    box-shadow: 0 25px 40px 0 rgba(20, 102, 204, 0.16);
+    background: #30363d;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 12px 20px 12px;
+
+    @include media-breakpoint-down(xs) {
+      width: 60vw;
+    }
+
+    li {
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    &-address {
+      opacity: 0.5;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    &-out {
+      color: #FF5E54;
+    }
+  }
+}
+
+.profile-box {
+  position: relative;
+}
+
 </style>
