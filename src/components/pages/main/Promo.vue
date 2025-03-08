@@ -10,29 +10,34 @@ import BasePicture from '@/components/base/BasePicture.vue'
 import BaseSvg from '@/components/base/BaseSvg.vue'
 import { openPageInNewTab, copyPageLink, getTargetRoute, socialIcons } from '@/components/composable/copyLink.js'
 
+
 const currentUser = ref(users[0]);
+const currentNft = ref(nft.find(n => n.user === currentUser.value.id) || nft[0]);
 const router = useRouter();
 const currentPage = 'promo';
+
+const updateNft = function (userId) {
+  currentNft.value = nft.find(n => n.user === userId) || nft[0];
+}
 
 const updateUser = function (nft) {
   const userId = nft.user;
   currentUser.value = users.find((user) => user.id === userId);
+  updateNft(userId);
 }
-
-
 
 const handleIconClick = (icon) => {
   switch (icon.route) {
     case 'dynamic':
-      router.push(getTargetRoute(currentPage));
+      router.push({ path: '/artwork', query: { id: currentNft.value.id } })
       break;
     case 'copy':
       copyPageLink(currentPage);
       break;
     default:
-      openPageInNewTab(icon.route)
+      openPageInNewTab(icon.route);
   }
-}
+};
 </script>
 
 <template>
@@ -64,7 +69,7 @@ const handleIconClick = (icon) => {
 
           </div>
 
-          <h1 class="info__title">WFH - art name</h1>
+          <h1 class="info__title">{{currentNft.description.title}}</h1>
 
           <p class="info__description">
             {{ currentUser.description }}

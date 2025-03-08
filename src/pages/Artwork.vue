@@ -13,7 +13,7 @@ import UsersActivityInfo from '@/components/pages/artwork/UsersActivityInfo.vue'
 import { users } from '@/data/users.js';
 
 const route = useRoute();
-const nftId = Number(route.query.id) || 0;
+const nftId = ref(Number(route.query.id) || 0);
 const showCountDown = ref(true);
 const buttonText = ref('Place a bid');
 
@@ -24,9 +24,8 @@ const currentUser = ref(users.find(user => user.id === currentNft.value.user) ||
 
 watch(() => route.query.id, (newId) => {
   const id = Number(newId) || 0;
-  const finallYNft = nft.find(item => item.id === id) || nft[0];
-  currentNft.value = finallYNft;
-  currentUser.value = users.find(user => user.id === finallYNft.user) || users[0];
+  currentNft.value = nft.find(item => item.id === id) || nft[0];
+  currentUser.value = users.find(user => user.id === currentNft.value.user) || users[0];
 });
 
 const handleBidClick = () => {

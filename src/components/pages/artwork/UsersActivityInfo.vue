@@ -57,18 +57,19 @@ const goToCreatorPage = (userId) => {
   router.push({ path: '/creator', query: { userId } })
 }
 
+
 const handleIconClick = (icon) => {
   switch (icon.route) {
     case 'dynamic':
-      router.push(getTargetRoute(currentPage));
-      break
+      router.push({ path: '/creator', query: { id: currentNft.value.id } })
+      break;
     case 'copy':
-      copyPageLink(currentPage)
-      break
+      copyPageLink(currentPage);
+      break;
     default:
-      openPageInNewTab(icon.route)
+      openPageInNewTab(icon.route);
   }
-}
+};
 
 </script>
 
