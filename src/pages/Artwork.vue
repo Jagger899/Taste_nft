@@ -1,7 +1,7 @@
 <script setup>
 import TheHeader from '@/components/base/TheHeader.vue';
 import { nft } from '@/data/nft';
-import { ref, watch } from 'vue'
+import { ref, watch,computed } from 'vue'
 import { useRoute } from 'vue-router';
 import BasePicture from '@/components/base/BasePicture.vue'
 import UIButton from '@/components/UI/UIButton.vue'
@@ -13,20 +13,31 @@ import UsersActivityInfo from '@/components/pages/artwork/UsersActivityInfo.vue'
 import { users } from '@/data/users.js';
 
 const route = useRoute();
-const nftId = ref(Number(route.query.id) || 0);
+const nftId = ref(null);
 const showCountDown = ref(true);
 const buttonText = ref('Place a bid');
 
 
-const currentNft = ref(nft.find(item => item.id === nftId) || nft[0]);
+const currentNft = computed(() => nft.find(item => item.id === nftId.value));
+const currentUser = computed(() => users.find(user => user.id === currentNft.value.user));
 
-const currentUser = ref(users.find(user => user.id === currentNft.value.user) || users[0]);
+const updateNftAndUser = (id) => {
+  const foundNft = nft.find(item => item.id === id);
+  currentNft.value = foundNft;
+  currentUser.value = users.find(user => user.id === foundNft.user);
+};
 
-watch(() => route.query.id, (newId) => {
-  const id = Number(newId) || 0;
-  currentNft.value = nft.find(item => item.id === id) || nft[0];
-  currentUser.value = users.find(user => user.id === currentNft.value.user) || users[0];
-});
+watch(
+  () => route.query.id,
+  (newId) => {
+    const id = Number(newId);
+    if (!isNaN(id)) {
+      nftId.value = id;
+      updateNftAndUser(id);
+    }
+  },
+  { immediate: true }
+);
 
 const handleBidClick = () => {
   showCountDown.value = false;
@@ -38,7 +49,7 @@ const handleBidClick = () => {
 <template>
   <TheHeader/>
 
-  <section class="artwork">
+  <section class="artwork" v-if="currentNft && currentUser">
 
     <div class="container">
 
@@ -100,7 +111,7 @@ const handleBidClick = () => {
 
   <UIPlaceBidModal/>
 
-  <UsersActivityInfo :user="currentUser" :nft="currentNft"/>
+  <UsersActivityInfo v-if="currentUser && currentNft" :user="currentUser" :nft="currentNft"/>
 
   <CardsNft/>
 </template>

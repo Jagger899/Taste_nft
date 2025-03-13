@@ -1,7 +1,7 @@
 <script setup>
 import { useModalStore } from '@/components/stores/store'
 import BaseSvg from '@/components/base/BaseSvg.vue'
-import { onMounted, onUnmounted } from 'vue'
+import { watch } from 'vue'
 
 const store = useModalStore();
 
@@ -9,11 +9,13 @@ const close = () => {
   store.closeModal('walletCompleteModal');
 };
 
-onMounted(() => {
-  setTimeout(() => {
-    store.closeModal('walletCompleteModal');
-    store.showProfileAfterDelay();
-  }, 3000);
+watch(() => store.modals.walletCompleteModal, (newValue) => {
+  if (newValue) {
+    setTimeout(() => {
+      store.closeModal('walletCompleteModal');
+      store.showProfile();
+    }, 3000);
+  }
 });
 
 </script>

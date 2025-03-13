@@ -8,12 +8,15 @@ export const useModalStore = defineStore('modal', () => {
     videoModal: false,
     searchModal: false,
     placeBidModal: false,
+    createModal: false,
   })
 
   const activeVideoUrl = reactive({
     url: ''
   });
+
   const isProfileVisible = ref(false);
+  const isLoggedIn = ref(false);
 
   const openModal = (modalName, videoUrl = '') => {
     modals[modalName] = true
@@ -29,11 +32,15 @@ export const useModalStore = defineStore('modal', () => {
     }
   }
 
-  const showProfileAfterDelay = () => {
-    setTimeout(() => {
-      isProfileVisible.value = true;
-    }, 500);
+  const showProfile = () => {
+    isProfileVisible.value = true;
+    isLoggedIn.value = true;
   }
+
+  const logout = () => {
+    isLoggedIn.value = false;
+    isProfileVisible.value = false;
+  };
 
   return {
     modals,
@@ -41,6 +48,8 @@ export const useModalStore = defineStore('modal', () => {
     openModal,
     closeModal,
     isProfileVisible,
-    showProfileAfterDelay
+    showProfile,
+    isLoggedIn,
+    logout
   }
 })

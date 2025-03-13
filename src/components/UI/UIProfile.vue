@@ -2,7 +2,9 @@
 import { user } from '@/data/profile.js'
 import BasePicture from '@/components/base/BasePicture.vue'
 import BaseSvg from '@/components/base/BaseSvg.vue'
+import { useModalStore } from '@/components/stores/store';
 defineProps(['active', 'adaptive'])
+
 </script>
 
 <template>

@@ -7,6 +7,7 @@ import UIWalletModal from './components/UI/UIWalletModal.vue'
 import { useModalStore } from './components/stores/store'
 import UIWalletModalComlete from './components/UI/UIWalletModalComlete.vue'
 import UIVideoModal from './components/UI/UIVideoModal.vue'
+import UICreateArtworkModal from '@/components/UI/UICreateArtworkModal.vue'
 
 const store = useModalStore()
 const cards = [
@@ -37,6 +38,7 @@ const searchQuery = ref('');
       <UIWalletModal :cards="cards" />
       <UIWalletModalComlete />
       <UIVideoModal />
+      <UICreateArtworkModal />
     </teleport>
 
     <SvgManager />

@@ -198,6 +198,14 @@
 
     </symbol>
 
+    <symbol id="plus" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13.96 4.64V8.96H9.84V13.48H5V8.96H0.88V4.64H5V0.119999H9.84V4.64H13.96Z" fill="white" fill-opacity="0.5"/>
+    </symbol>
+
+    <symbol id="minus" viewBox="0 0 13 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0.32 5.44V0.6H12.44V5.44H0.32Z" fill="white" fill-opacity="0.5"/>
+    </symbol>
+
 
 
   </svg>
@@ -207,4 +215,6 @@
 
 <script setup lang="ts">
 </script>
+
+
 

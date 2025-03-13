@@ -13,7 +13,7 @@ const store = useModalStore();
 const router = useRouter();
 
 const showProfileMenu = ref(false);
-const isLoggedIn = ref(true);
+
 
 function goToCreator() {
   showProfileMenu.value = false;
@@ -35,7 +35,7 @@ function clearSearchQuery() {
   store.closeModal('searchModal');
 }
 
-const buttonText = computed(() => isLoggedIn.value ? 'Artwork' : 'Connect wallet');
+const buttonText = computed(() => store.isLoggedIn ? 'Artwork' : 'Connect wallet');
 
 function toggleProfileMenu(event) {
   event.stopPropagation();
@@ -48,9 +48,17 @@ function handleClickOutside(event) {
   }
 }
 
+function handleCreateClick() {
+  store.closeModal('walletModal');
+  if (store.isLoggedIn && store.isProfileVisible) {
+    store.openModal('createModal');
+  } else {
+    store.openModal('walletModal');
+  }
+}
+
 function logout() {
-  isLoggedIn.value = false;
-  showProfileMenu.value = false;
+  store.logout();
 }
 
 onMounted(() => {
@@ -101,12 +109,12 @@ onUnmounted(() => {
 
       <div class="header__btn">
 
-        <UIButton modalName="walletModal">{{ buttonText }}</UIButton>
+        <UIButton modalName="walletModal" @click="handleCreateClick">{{ buttonText }}</UIButton>
 
       </div>
     </div>
 
-    <div class="profile-box" v-if="store.isProfileVisible && isLoggedIn">
+    <div v-if="store.isProfileVisible && store.isLoggedIn" class="profile-box">
       <UIProfile @click="toggleProfileMenu" />
 
       <ul v-if="showProfileMenu" class="profile__list">
@@ -239,6 +247,7 @@ onUnmounted(() => {
       margin-top: 8px;
       cursor: pointer;
       user-select: none;
+      color:$whiteColor
     }
 
     &-address {
@@ -246,13 +255,19 @@ onUnmounted(() => {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      font-weight: 600;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.5)
     }
 
-    &-out {
-      color: #FF5E54;
-    }
+  }
+
+  &__list-out{
+    color: #FF5E54;
   }
 }
+
+
 
 .profile-box {
   position: relative;
