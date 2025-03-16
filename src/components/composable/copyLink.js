@@ -1,5 +1,6 @@
 import { useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
+import {useModalStore} from '@/components/stores/store.js'
 
 export function openPageInNewTab(url) {
   window.open(url, '_blank')
@@ -39,9 +40,11 @@ export const socialIcons = [
   },
   {
     id: 'vertical-more',
-    route: '',
-    action: function(){
-      toast.info('Decoration')
+    route: 'profile',
+    action: function() {
+      const modalStore = useModalStore();
+      modalStore.showCreateProfile();
+      console.log('is working')
     },
   },
 ]

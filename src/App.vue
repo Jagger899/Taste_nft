@@ -8,6 +8,8 @@ import { useModalStore } from './components/stores/store'
 import UIWalletModalComlete from './components/UI/UIWalletModalComlete.vue'
 import UIVideoModal from './components/UI/UIVideoModal.vue'
 import UICreateArtworkModal from '@/components/UI/UICreateArtworkModal.vue'
+import Profile from '@/components/reusable/Profile.vue'
+
 
 const store = useModalStore()
 const cards = [
@@ -39,6 +41,7 @@ const searchQuery = ref('');
       <UIWalletModalComlete />
       <UIVideoModal />
       <UICreateArtworkModal />
+      <Profile v-if="store.isCreateProfileVisible" />
     </teleport>
 
     <SvgManager />

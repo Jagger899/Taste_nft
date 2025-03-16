@@ -8,6 +8,8 @@ import BaseSvg from '@/components/base/BaseSvg.vue'
 import UIButton from '@/components/UI/UIButton.vue'
 import { openPageInNewTab, copyPageLink, getTargetRoute, socialIcons } from '@/components/composable/copyLink.js'
 import { useRouter, useRoute } from 'vue-router'
+import {useModalStore} from '@/components/stores/store.js'
+import Profile from '@/components/reusable/Profile.vue';
 
 // const currentUser = ref(users[0]);
 const currentFollower = ref(followers[0]);
@@ -21,6 +23,8 @@ const updateUser = (userId) => {
   currentUser.value = foundUser || users[0]
 }
 
+const modalStore = useModalStore();
+
 watch(() => route.query.userId, (newUserId) => {
   if (newUserId){
     updateUser(newUserId);
@@ -28,15 +32,19 @@ watch(() => route.query.userId, (newUserId) => {
 }, { immediate: true });
 
 const handleIconClick = (icon) => {
-  switch (icon.route) {
-    case 'dynamic':
-      router.push(getTargetRoute(currentPage));
-      break;
-    case 'copy':
-      copyPageLink(currentPage);
-      break;
-    default:
-      openPageInNewTab(icon.route)
+  if (icon.route === 'profile') {
+    icon.action()
+  } else {
+    switch (icon.route) {
+      case 'dynamic':
+        router.push(getTargetRoute(currentPage))
+        break
+      case 'copy':
+        copyPageLink(currentPage)
+        break
+      default:
+        openPageInNewTab(icon.route)
+    }
   }
 }
 </script>

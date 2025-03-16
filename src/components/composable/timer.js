@@ -13,12 +13,12 @@ export function useTimer(initialTime) {
 
   const updateTime = () => {
     if (time.value > 0) {
-      time.value--
-      formattedTime.value = formatTime(time.value)
+      time.value--;
+      formattedTime.value = formatTime(time.value);
     }
   }
 
-  formattedTime.value = formatTime(time.value)
+  formattedTime.value = formatTime(time.value);
 
   return {
     time,

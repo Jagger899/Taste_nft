@@ -16,6 +16,7 @@ export const useModalStore = defineStore('modal', () => {
   });
 
   const isProfileVisible = ref(false);
+  const isCreateProfileVisible = ref(false);
   const isLoggedIn = ref(false);
 
   const openModal = (modalName, videoUrl = '') => {
@@ -42,6 +43,14 @@ export const useModalStore = defineStore('modal', () => {
     isProfileVisible.value = false;
   };
 
+  const showCreateProfile = () => {
+    isCreateProfileVisible.value = true;
+  };
+
+  const hideCreateProfile = () => {
+    isProfileVisible.value = false;
+  };
+
   return {
     modals,
     activeVideoUrl,
@@ -50,6 +59,9 @@ export const useModalStore = defineStore('modal', () => {
     isProfileVisible,
     showProfile,
     isLoggedIn,
-    logout
+    logout,
+    showCreateProfile,
+    hideCreateProfile,
+    isCreateProfileVisible
   }
 })

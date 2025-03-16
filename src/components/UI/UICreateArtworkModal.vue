@@ -15,11 +15,6 @@ const handleFileUpload = (event) => {
   handleFile(file);
 };
 
-const handleDrop = (event) => {
-  event.preventDefault();
-  const file = event.dataTransfer.files[0];
-  handleFile(file);
-};
 
 const handleFile = (file) => {
   const validTypes = ['image/png', 'image/jpeg', 'image/gif'];
@@ -36,7 +31,6 @@ const nextStep = () => {
   } else if (step.value === 2) {
     step.value = 3;
   } else if (step.value === 3) {
-    store.openModal('secondStepModal');
     store.closeModal('createModal');
   }
 };
@@ -119,7 +113,7 @@ const isButtonDisabled = computed(() => {
         <p class="create-modal__step">Step 1 from 3</p>
         <p class="create-modal__task">Upload the artwork you will be selling</p>
 
-        <div class="upload-box" @dragover.prevent @drop="handleDrop" @click="triggerFileInput">
+        <div class="upload-box" @click="triggerFileInput">
           <input type="file" ref="fileInput" hidden @change="handleFileUpload" accept="image/png, image/jpeg, image/gif" />
 
           <div v-if="!image" class="upload-box__task-box">
